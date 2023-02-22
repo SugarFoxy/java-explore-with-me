@@ -21,3 +21,7 @@ services:
       - /var/lib/postgresql/data/
     env_file:
       - stats-db.env
+
+  ewm-service:
+    ports:
+      - "8080:8080"
