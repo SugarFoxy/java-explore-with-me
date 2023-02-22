@@ -25,11 +25,15 @@ public class StatsServiceImp implements StatsService {
         LocalDateTime parsEnd = DateTimeUtils.parseDate(end);
 
         if (uri.isEmpty()) {
-            return storage.getStats(parsStart, parsEnd, null, unique);
+            return storage.getStats(parsStart, parsEnd, null, unique)
+                    .stream()
+                    .sorted(StatsDto::compareTo)
+                    .collect(Collectors.toList());
         } else {
             return uri
                     .stream()
                     .flatMap((url) -> storage.getStats(parsStart, parsEnd, url, unique).stream())
+                    .sorted(StatsDto::compareTo)
                     .collect(Collectors.toList());
         }
     }

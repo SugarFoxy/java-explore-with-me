@@ -7,8 +7,13 @@ import lombok.*;
 @Getter
 @AllArgsConstructor
 @NoArgsConstructor
-public class StatsDto {
+public class StatsDto implements Comparable<StatsDto> {
     String app;
     String uri;
     Long hits;
+
+    @Override
+    public int compareTo(StatsDto o) {
+        return o.hits.compareTo(this.hits);
+    }
 }
