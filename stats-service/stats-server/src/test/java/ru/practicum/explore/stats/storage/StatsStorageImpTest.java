@@ -37,7 +37,7 @@ class StatsStorageImpTest {
                 .uri("/events/1")
                 .timestamp(DateTimeUtils.parseDate("2022-09-06 11:00:23"))
                 .build();
-        Hit hit2_1 = Hit.builder()
+        Hit hit21 = Hit.builder()
                 .app("ewm-main-service")
                 .ip("192.163.0.1")
                 .uri("/events/1")
@@ -50,7 +50,7 @@ class StatsStorageImpTest {
                 .timestamp(DateTimeUtils.parseDate("2022-09-06 11:00:24"))
                 .build();
         entityManager.persist(hitRepository.save(hit1));
-        entityManager.persist(hitRepository.save(hit2_1));
+        entityManager.persist(hitRepository.save(hit21));
         entityManager.persist(hitRepository.save(hit2));
     }
 
