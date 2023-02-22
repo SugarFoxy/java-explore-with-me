@@ -39,6 +39,7 @@ class StatsServiceImpTest {
     @Test
     void getStats_whenUriFound_thenReturnedList() {
         StatsDto statsDto = new StatsDto();
+        statsDto.setHits(3L);
         List<StatsDto> statsDtoOutRep = List.of(statsDto);
         List<String> uri = List.of("/event/1", "/event/2");
         when(storage.getStats(any(), any(), any(), anyBoolean())).thenReturn(statsDtoOutRep);
