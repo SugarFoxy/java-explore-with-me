@@ -25,11 +25,7 @@ public class StatsStorageImp implements StatsStorage {
         CriteriaBuilder cb = entityManager.getCriteriaBuilder();
         CriteriaQuery<StatsDto> cr = cb.createQuery(StatsDto.class);
         Root<Hit> root = cr.from(Hit.class);
-        if (unique) {
-            cr.multiselect(root.get("app"), root.get("uri"), cb.countDistinct(root.get("ip")));
-        } else {
-            cr.multiselect(root.get("app"), root.get("uri"), cb.count(root));
-        }
+        cr.multiselect(root.get("app"), root.get("uri"), unique ? cb.countDistinct(root.get("ip")) : cb.count(root));
         cr.groupBy(root.get("app"), root.get("uri"));
         if (uri == null) {
             cr.where(cb.and(

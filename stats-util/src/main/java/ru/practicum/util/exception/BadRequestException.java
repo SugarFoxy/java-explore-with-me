@@ -11,16 +11,10 @@ public class BadRequestException extends RuntimeException {
     private final String status;
     private final String timestamp;
 
-//    public BadRequestException(String message) {
-//        super(message);
-//        status = HttpStatus.BAD_REQUEST.toString();
-//        timestamp = DateTimeUtils.getDateTime(LocalDateTime.now());
-//    } пригодиться в будущем
-
-    public BadRequestException(String message, Throwable e) {
-        super(message, e);
+    public BadRequestException(String message) {
+        super(message);
         status = HttpStatus.BAD_REQUEST.toString();
         timestamp = DateTimeUtils.getDateTime(LocalDateTime.now());
-
     }
+
 }

@@ -21,9 +21,9 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 @AutoConfigureMockMvc
 class HitControllerTest {
     @Autowired
-    private MockMvc mockMvc;
+    MockMvc mockMvc;
     @Autowired
-    private ObjectMapper objectMapper;
+    ObjectMapper objectMapper;
     @MockBean
     @Qualifier("hitServiceImp")
     HitService service;

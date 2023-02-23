@@ -12,17 +12,15 @@ import static org.assertj.core.api.Assertions.assertThat;
 
 
 class StatsDtoTest {
-    private JacksonTester<StatsDto> jtHitDto;
-    ObjectMapper objectMapper;
+    JacksonTester<StatsDto> jtHitDto;
 
     @BeforeEach
     public void createContext() {
-        objectMapper = new ObjectMapper();
-        JacksonTester.initFields(this, objectMapper);
+        JacksonTester.initFields(this, new ObjectMapper());
     }
 
     @Test
-    public void itemDtoJsonTest() throws IOException {
+    public void statsDtoJsonTest() throws IOException {
         StatsDto statsDto = StatsDto.builder()
                 .app("ewm-main-service")
                 .uri("/events/1")
@@ -30,8 +28,14 @@ class StatsDtoTest {
                 .build();
 
         JsonContent<StatsDto> itemDtoResult = jtHitDto.write(statsDto);
-        assertThat(itemDtoResult).extractingJsonPathStringValue("$.app").isEqualTo(statsDto.getApp());
-        assertThat(itemDtoResult).extractingJsonPathStringValue("$.uri").isEqualTo(statsDto.getUri());
-        assertThat(itemDtoResult).extractingJsonPathValue("$.hits").isEqualTo(statsDto.getHits().intValue());
+        assertThat(itemDtoResult)
+                .extractingJsonPathStringValue("$.app")
+                .isEqualTo(statsDto.getApp());
+        assertThat(itemDtoResult)
+                .extractingJsonPathStringValue("$.uri")
+                .isEqualTo(statsDto.getUri());
+        assertThat(itemDtoResult)
+                .extractingJsonPathValue("$.hits")
+                .isEqualTo(statsDto.getHits().intValue());
     }
 }

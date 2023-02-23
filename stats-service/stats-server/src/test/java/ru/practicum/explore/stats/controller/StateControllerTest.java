@@ -19,7 +19,7 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 @AutoConfigureMockMvc
 class StateControllerTest {
     @Autowired
-    private MockMvc mockMvc;
+    MockMvc mockMvc;
     @MockBean
     @Qualifier("statsServiceImp")
     StatsService service;

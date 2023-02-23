@@ -8,14 +8,14 @@ import java.time.format.DateTimeFormatter;
 public class DateTimeUtils {
     public static final String DATE_TIME_FORMAT = "yyyy-MM-dd HH:mm:ss";
 
-    public static LocalDateTime parseDate(String dateString) {
-        if (dateString == null) {
+    public static LocalDateTime parseDate(String date) {
+        if (date == null) {
             return null;
         }
         try {
-            return LocalDateTime.parse(dateString, DateTimeFormatter.ofPattern(DATE_TIME_FORMAT));
+            return LocalDateTime.parse(date, DateTimeFormatter.ofPattern(DATE_TIME_FORMAT));
         } catch (RuntimeException ex) {
-            throw new BadRequestException("Не корректный формат даты", ex);
+            throw new BadRequestException("Не корректный формат даты");
         }
     }
 

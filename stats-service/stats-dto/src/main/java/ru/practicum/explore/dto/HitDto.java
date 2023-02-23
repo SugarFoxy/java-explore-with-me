@@ -7,7 +7,6 @@ import javax.validation.constraints.NotBlank;
 @Setter
 @Getter
 @AllArgsConstructor
-@NoArgsConstructor
 @Builder
 public class HitDto {
     Long id;

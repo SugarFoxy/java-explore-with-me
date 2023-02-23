@@ -21,7 +21,7 @@ class StatsStorageImpTest {
     final LocalDateTime start = DateTimeUtils.parseDate("2022-09-06 11:00:00");
     final LocalDateTime end = DateTimeUtils.parseDate("2022-09-06 12:00:00");
     @Autowired
-    private EntityManager entityManager;
+    EntityManager entityManager;
     @Autowired
     HitRepository hitRepository;
 

@@ -12,17 +12,15 @@ import static org.assertj.core.api.Assertions.assertThat;
 
 
 class HitDtoTest {
-    private JacksonTester<HitDto> jtHitDto;
-    ObjectMapper objectMapper;
+    JacksonTester<HitDto> jtHitDto;
 
     @BeforeEach
     public void createContext() {
-        objectMapper = new ObjectMapper();
-        JacksonTester.initFields(this, objectMapper);
+        JacksonTester.initFields(this, new ObjectMapper());
     }
 
     @Test
-    public void itemDtoJsonTest() throws IOException {
+    public void hitDtoJsonTest() throws IOException {
         HitDto hitDto = HitDto.builder()
                 .id(1L)
                 .app("ewm-main-service")
@@ -33,10 +31,20 @@ class HitDtoTest {
 
         JsonContent<HitDto> itemDtoResult = jtHitDto.write(hitDto);
 
-        assertThat(itemDtoResult).extractingJsonPathNumberValue("$.id").isEqualTo(hitDto.getId().intValue());
-        assertThat(itemDtoResult).extractingJsonPathStringValue("$.app").isEqualTo(hitDto.getApp());
-        assertThat(itemDtoResult).extractingJsonPathStringValue("$.uri").isEqualTo(hitDto.getUri());
-        assertThat(itemDtoResult).extractingJsonPathStringValue("$.ip").isEqualTo(hitDto.getIp());
-        assertThat(itemDtoResult).extractingJsonPathValue("$.timestamp").isEqualTo(hitDto.getTimestamp());
+        assertThat(itemDtoResult)
+                .extractingJsonPathNumberValue("$.id")
+                .isEqualTo(hitDto.getId().intValue());
+        assertThat(itemDtoResult)
+                .extractingJsonPathStringValue("$.app")
+                .isEqualTo(hitDto.getApp());
+        assertThat(itemDtoResult)
+                .extractingJsonPathStringValue("$.uri")
+                .isEqualTo(hitDto.getUri());
+        assertThat(itemDtoResult)
+                .extractingJsonPathStringValue("$.ip")
+                .isEqualTo(hitDto.getIp());
+        assertThat(itemDtoResult)
+                .extractingJsonPathValue("$.timestamp")
+                .isEqualTo(hitDto.getTimestamp());
     }
 }

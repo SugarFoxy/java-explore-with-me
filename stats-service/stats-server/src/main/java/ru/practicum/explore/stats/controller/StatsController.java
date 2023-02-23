@@ -30,7 +30,7 @@ public class StatsController {
             @RequestParam String start,
             @RequestParam String end,
             @RequestParam(required = false) List<String> uris,
-            @RequestParam(required = false, defaultValue = "false") boolean unique
+            @RequestParam(defaultValue = "false") boolean unique
     ) {
         log.info("Запрос на статистику");
         return service.getStats(start, end, uris, unique);
