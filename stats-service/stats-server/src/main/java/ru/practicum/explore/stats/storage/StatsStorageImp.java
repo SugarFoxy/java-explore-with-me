@@ -28,16 +28,10 @@ public class StatsStorageImp implements StatsStorage {
         cr.multiselect(root.get("app"), root.get("uri"), unique ? cb.countDistinct(root.get("ip")) : cb.count(root));
         cr.groupBy(root.get("app"), root.get("uri"));
         if (uri == null) {
-            cr.where(cb.and(
-                    cb.greaterThanOrEqualTo(root.get("timestamp"), start),
-                    cb.lessThanOrEqualTo(root.get("timestamp"), end)
-            ));
+            cr.where(cb.between(root.get("timestamp"),start,end));
         } else {
-            cr.where(cb.and(
-                    cb.greaterThanOrEqualTo(root.get("timestamp"), start),
-                    cb.lessThanOrEqualTo(root.get("timestamp"), end),
-                    cb.equal(root.get("uri"), uri)
-            ));
+            cr.where(cb.and(cb.between(root.get("timestamp"),start,end),
+                    cb.equal(root.get("uri"), uri)));
         }
         TypedQuery<StatsDto> query = entityManager.createQuery(cr);
         return query.getResultList();
