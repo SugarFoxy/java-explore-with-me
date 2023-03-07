@@ -19,9 +19,9 @@ public class CategoryAdminServiceImp implements CategoryAdminService {
 
     @Autowired
     public CategoryAdminServiceImp(CategoryRepository categoryRepository,
-                                   RepositoryObjectCreator checkExistence) {
+                                   RepositoryObjectCreator objectCreator) {
         this.categoryRepository = categoryRepository;
-        this.objectCreator = checkExistence;
+        this.objectCreator = objectCreator;
     }
 
     public CategoryDto createCategory(NewCategoryDto categoryDto) {
@@ -34,7 +34,8 @@ public class CategoryAdminServiceImp implements CategoryAdminService {
 
     public void deleteCategory(Long id) {
         if (objectCreator.isRelatedCategory(id)) {
-            throw new ConflictException("Невозможно удалить! Категория завязана на событие!");
+            throw new ConflictException(String.format("Невозможно удалить категорию id = %d! " +
+                    "Уже существует событие с данной категорией!", id));
         }
         categoryRepository.deleteById(id);
     }
@@ -45,7 +46,8 @@ public class CategoryAdminServiceImp implements CategoryAdminService {
         try {
             return toCategoryDto(categoryRepository.save(toCategory(categoryDto)));
         } catch (Exception e) {
-            throw new ConflictException("Ктегория c таким названием уже существует");
+            throw new ConflictException(String.format("Невозможно изменить категорию id = %d! " +
+                    "Ктегория c таким названием уже существует", catId));
         }
     }
 }

@@ -12,7 +12,7 @@ import javax.validation.constraints.NotNull;
 @Builder
 public class CategoryDto {
     private Long id;
-    @NotNull
-    @NotBlank
+    @NotNull(message = "Название категории не может быть пустым")
+    @NotBlank(message = "Название категории не может быть пустым")
     private String name;
 }

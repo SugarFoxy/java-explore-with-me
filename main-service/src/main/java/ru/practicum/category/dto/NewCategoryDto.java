@@ -11,7 +11,7 @@ import javax.validation.constraints.NotNull;
 @NoArgsConstructor
 @Builder
 public class NewCategoryDto {
-    @NotNull
-    @NotBlank
+    @NotNull(message = "Название категории не может быть пустым")
+    @NotBlank(message = "Название категории не может быть пустым")
     private String name;
 }

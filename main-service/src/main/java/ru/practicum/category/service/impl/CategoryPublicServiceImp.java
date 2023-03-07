@@ -17,12 +17,12 @@ import static ru.practicum.category.mapper.CategoryMapper.toCategoryDto;
 @Service
 public class CategoryPublicServiceImp implements CategoryPublicService {
     private final CategoryRepository categoryRepository;
-    private final RepositoryObjectCreator checkExistence;
+    private final RepositoryObjectCreator objectCreator;
 
     @Autowired
-    public CategoryPublicServiceImp(CategoryRepository categoryRepository, RepositoryObjectCreator checkExistence) {
+    public CategoryPublicServiceImp(CategoryRepository categoryRepository, RepositoryObjectCreator objectCreator) {
         this.categoryRepository = categoryRepository;
-        this.checkExistence = checkExistence;
+        this.objectCreator = objectCreator;
     }
 
     public List<CategoryDto> getAllCategories(Integer from, Integer size) {
@@ -32,6 +32,6 @@ public class CategoryPublicServiceImp implements CategoryPublicService {
     }
 
     public CategoryDto getCategoryById(Long id) {
-        return toCategoryDto(checkExistence.getCategoryById(id));
+        return toCategoryDto(objectCreator.getCategoryById(id));
     }
 }
