@@ -7,7 +7,7 @@ import ru.practicum.util.DateTimeUtils;
 import java.time.LocalDateTime;
 
 @Getter
-public class NotFoundException extends RuntimeException{
+public class NotFoundException extends RuntimeException {
     private final String status;
     private final String timestamp;
 
