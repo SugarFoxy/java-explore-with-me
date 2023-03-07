@@ -55,7 +55,7 @@ public class StatsClient extends BaseClient {
         parameters.add("start", start);
         parameters.add("end", end);
 
-        for(String uri : uris) {
+        for (String uri : uris) {
             parameters.add("uris", uri);
         }
 
