@@ -12,7 +12,7 @@ import javax.validation.constraints.NotNull;
 import java.util.List;
 
 @RestController
-@RequestMapping( "/users/{userId}/requests")
+@RequestMapping("/users/{userId}/requests")
 @CustomExceptionHandler
 @Slf4j
 public class ControllerPrivateRequest {

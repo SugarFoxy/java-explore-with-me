@@ -60,7 +60,7 @@ public class RepositoryObjectCreator {
                 .orElseThrow(() -> new NotFoundException(getMassage("Подборка", compId)));
     }
 
-    public Boolean isRelatedCategory(Long id){
+    public Boolean isRelatedCategory(Long id) {
         return eventRepository.existsByCategory(getCategoryById(id));
     }
 

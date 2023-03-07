@@ -17,7 +17,7 @@ import java.time.LocalDateTime;
 @NoArgsConstructor
 @AllArgsConstructor
 public class UpdateEventRequest {
-    @NotNull(message ="id не должно быть пустым")
+    @NotNull(message = "id не должно быть пустым")
     private Long id;
     @Size(min = 20, max = 2000)
     private String annotation;
