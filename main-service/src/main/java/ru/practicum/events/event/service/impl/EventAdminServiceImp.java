@@ -62,7 +62,7 @@ public class EventAdminServiceImp implements EventAdminService {
             CheckTime.checkTemporaryValidation(updateEventRequest.getEventDate(), event.getPublishedOn(), 1);
         }
         if (!event.getState().equals(EventState.PENDING)) {
-            throw new ConflictException("Нельзя изменить. Событие не в ожидании");
+            throw new ConflictException("Нельзя изменить событие. Статус события должен быть PENDING");
         } else {
             if (updateEventRequest.getStateAction().equals(EventStatus.PUBLISH_EVENT)) {
                 event.setState(EventState.PUBLISHED);

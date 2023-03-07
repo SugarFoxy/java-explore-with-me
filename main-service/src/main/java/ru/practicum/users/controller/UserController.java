@@ -15,7 +15,7 @@ import javax.validation.constraints.PositiveOrZero;
 import java.util.List;
 
 @RestController
-@RequestMapping(path = "/admin/users")
+@RequestMapping("/admin/users")
 @CustomExceptionHandler
 @Slf4j
 public class UserController {

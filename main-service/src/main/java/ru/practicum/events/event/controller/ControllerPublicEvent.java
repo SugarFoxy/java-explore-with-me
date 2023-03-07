@@ -1,5 +1,6 @@
 package ru.practicum.events.event.controller;
 
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 import ru.practicum.events.event.dto.EventFullDto;
@@ -13,15 +14,15 @@ import javax.validation.constraints.PositiveOrZero;
 import java.util.List;
 
 @RestController
-@RequestMapping(path = "/events")
+@RequestMapping("/events")
 @CustomExceptionHandler
+@Slf4j
 public class ControllerPublicEvent {
     private final EventPublicService service;
 
     @Autowired
     public ControllerPublicEvent(EventPublicService service) {
         this.service = service;
-
     }
 
     @GetMapping
@@ -35,12 +36,16 @@ public class ControllerPublicEvent {
                                                  @PositiveOrZero @RequestParam(defaultValue = "0") Integer from,
                                                  @Positive @RequestParam(defaultValue = "10") Integer size
     ) {
+        log.info("Получен запрос на получение событий с возможностью фильтрации:" +
+                 " text ={}, categories = {}, paid = {}, rangeStart = {}, rangeEnd = {}, onlyAvailable = {}, sort = {}",
+                text, categories, paid, rangeStart, rangeEnd, onlyAvailable, sort);
         return service.getEventsByParamsCommon(text, categories, paid, rangeStart, rangeEnd,
                 onlyAvailable, sort, from, size);
     }
 
     @GetMapping("/{eventId}")
     public EventFullDto getEventById(@PathVariable Long eventId, HttpServletRequest request) {
+        log.info("Получен запрос на получение подробной информации об опубликованном событии id = {}", eventId);
         return service.getEventById(eventId, request);
     }
 }

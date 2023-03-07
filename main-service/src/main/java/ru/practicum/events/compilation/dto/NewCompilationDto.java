@@ -12,8 +12,8 @@ import java.util.List;
 @Builder
 public class NewCompilationDto {
     private List<Long> events;
-    @NotNull
+    @NotNull(message = "pinned не может быть пустым")
     private Boolean pinned;
-    @NotNull
+    @NotNull(message = "title не может быть пустым")
     private String title;
 }

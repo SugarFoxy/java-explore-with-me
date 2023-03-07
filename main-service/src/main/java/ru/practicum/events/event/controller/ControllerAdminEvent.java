@@ -1,5 +1,6 @@
 package ru.practicum.events.event.controller;
 
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.validation.annotation.Validated;
@@ -15,9 +16,10 @@ import javax.validation.constraints.PositiveOrZero;
 import java.util.List;
 
 @RestController
-@RequestMapping(path = "/admin/events")
+@RequestMapping("/admin/events")
 @Validated
 @CustomExceptionHandler
+@Slf4j
 public class ControllerAdminEvent {
 
     private final EventAdminService service;
@@ -35,12 +37,13 @@ public class ControllerAdminEvent {
                                       @RequestParam(required = false) String rangeEnd,
                                       @PositiveOrZero @RequestParam(name = "from", defaultValue = "0") Integer from,
                                       @Positive @RequestParam(name = "size", defaultValue = "10") Integer size) {
-
+        log.info("Получен запрос на поиск событий");
         return service.getEventsByParams(users, states, categories, rangeStart, rangeEnd, from, size);
     }
 
     @PatchMapping("/{eventId}")
     public EventFullDto update(@Positive @PathVariable Long eventId, @RequestBody UpdateEventRequest dto) {
+        log.info("Получен запрос на редактирование данных события {} и его статуса {}", eventId, dto.getStateAction());
         return service.update(eventId, dto);
     }
 }

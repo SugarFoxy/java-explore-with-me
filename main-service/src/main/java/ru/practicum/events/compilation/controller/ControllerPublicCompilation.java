@@ -1,5 +1,6 @@
 package ru.practicum.events.compilation.controller;
 
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -14,6 +15,7 @@ import java.util.List;
 @RestController
 @RequestMapping("/compilations")
 @CustomExceptionHandler
+@Slf4j
 public class ControllerPublicCompilation {
     private final CompilationPublicService service;
 
@@ -24,11 +26,13 @@ public class ControllerPublicCompilation {
 
     @GetMapping
     public List<CompilationDto> getAllCompilations() {
+        log.info("Получен запрос на получение подборок событий");
         return service.getAllCompilations();
     }
 
     @GetMapping("{compId}")
     public CompilationDto getCompilationById(@PathVariable Long compId) {
+        log.info("Получен запрос на получение подборок событий по его id = {}", compId);
         return service.getCompilationById(compId);
     }
 }

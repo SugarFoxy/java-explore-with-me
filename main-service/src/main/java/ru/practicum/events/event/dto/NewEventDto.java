@@ -15,17 +15,17 @@ import java.time.LocalDateTime;
 @AllArgsConstructor
 @NoArgsConstructor
 public class NewEventDto {
-    @NotNull
+    @NotNull(message ="annotation не должно быть пустым")
     @Size(min = 20, max = 2000)
     private String annotation;
-    @NotNull
+    @NotNull(message ="category не должно быть пустым")
     private Long category;
-    @NotNull
+    @NotNull(message ="description не должно быть пустым")
     @Size(min = 20, max = 7000)
     private String description;
     @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd HH:mm:ss")
     private LocalDateTime eventDate;
-    @NotNull()
+    @NotNull(message ="location не должно быть пустым")
     private Location location;
     @Value("false")
     private Boolean paid;
@@ -33,7 +33,7 @@ public class NewEventDto {
     private Integer participantLimit;
     @Value("true")
     private Boolean requestModeration;
-    @NotNull
+    @NotNull(message ="title не должно быть пустым")
     @Size(min = 3, max = 120)
     private String title;
 }

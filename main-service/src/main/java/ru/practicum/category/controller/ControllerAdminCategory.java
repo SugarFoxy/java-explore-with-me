@@ -13,7 +13,7 @@ import javax.validation.Valid;
 import javax.validation.constraints.NotNull;
 
 @RestController
-@RequestMapping(path = "/admin/categories")
+@RequestMapping("/admin/categories")
 @CustomExceptionHandler
 @Slf4j
 public class ControllerAdminCategory {

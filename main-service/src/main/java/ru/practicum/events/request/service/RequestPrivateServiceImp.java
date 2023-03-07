@@ -48,16 +48,16 @@ public class RequestPrivateServiceImp implements RequestPrivateService {
         Event event = checkExistence.getEventById(eventId);
 
         if (event.getInitiator().equals(user)) {
-            throw new ConflictException("Невозможно запросить собственные мероприятия");
+            throw new ConflictException("Невозможно запросить собственные мероприятия!");
         }
-        if (!requestRepository.findByEventAndRequester(event, user).isEmpty()) {
-            throw new ConflictException("Нельзя запросить повторно");
+        if (requestRepository.existsRequestByEventAndRequester(event,user)) {
+            throw new ConflictException("Нельзя отправить запрос на участие повторно!");
         }
         if (event.getState() != EventState.PUBLISHED) {
-            throw new ConflictException("Событие не опубликованно");
+            throw new ConflictException("Чтобы запросить участие, событие должно быть опубликованно!");
         }
         if (event.getParticipantLimit() > 0 && event.getConfirmedRequests() >= event.getParticipantLimit()) {
-            throw new ConflictException("Достигнут лимит участников");
+            throw new ConflictException("Невозможно создать запрос! Достигнут лимит участников!");
         }
 
         Request request = Request.builder()
@@ -81,7 +81,7 @@ public class RequestPrivateServiceImp implements RequestPrivateService {
         Request request = checkExistence.getRequestById(requestId);
 
         if (!request.getRequester().equals(user)) {
-            throw new ConflictException("Отменить рапрос может только хозяин запроса");
+            throw new ConflictException("Отменить запрос может только хозяин запроса");
         }
 
         request.setStatus(RequestStatus.CANCELED);

@@ -69,7 +69,7 @@ public class EventPublicServiceImp implements EventPublicService {
             case "VIEWS":
                 return getSortedEventByViews(text, categories, paid, rangeStart, rangeEnd, onlyAvailable, from, size);
             default:
-                throw new BadRequestException("Не верная сортировка");
+                throw new BadRequestException("Сортировать можно только по EVENT_DATE и VIEWS");
         }
     }
 

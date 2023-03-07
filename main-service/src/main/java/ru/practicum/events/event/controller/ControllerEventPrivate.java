@@ -1,5 +1,6 @@
 package ru.practicum.events.event.controller;
 
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
@@ -19,8 +20,9 @@ import javax.validation.constraints.PositiveOrZero;
 import java.util.List;
 
 @RestController
-@RequestMapping(path = "/users/{userId}/events")
+@RequestMapping("/users/{userId}/events")
 @CustomExceptionHandler
+@Slf4j
 public class ControllerEventPrivate {
     private final EventPrivateService service;
 
@@ -32,6 +34,7 @@ public class ControllerEventPrivate {
     @PostMapping()
     @ResponseStatus(HttpStatus.CREATED)
     public EventFullDto createEvent(@Positive @PathVariable Long userId, @Valid @RequestBody NewEventDto dto) {
+        log.info("Получен запрос на добавление нового события title = {}", dto.getTitle());
         return service.addNewEvent(userId, dto);
     }
 
@@ -39,12 +42,16 @@ public class ControllerEventPrivate {
     public EventFullDto updateEvent(@Positive @PathVariable Long userId,
                                     @Positive @PathVariable Long eventId,
                                     @RequestBody UpdateEventRequest dto) {
+        log.info("Получен запрос на изменение события id = {}," +
+                " добавленого текущим пользователем id = {}", eventId, userId);
         return service.update(userId, eventId, dto);
     }
 
     @GetMapping("/{eventId}")
     public EventFullDto getEventByIdWhereUserIsOwner(@Positive @PathVariable Long userId,
                                                      @Positive @PathVariable Long eventId) {
+        log.info("Получен запрос на получение информации о событии id = {}," +
+                " добавленном текущим пользователем id = {}", eventId, userId);
         return service.getUserEvent(userId, eventId);
     }
 
@@ -52,12 +59,16 @@ public class ControllerEventPrivate {
     public List<EventShortDto> findAllWhereUserIsOwner(@Positive @PathVariable Long userId,
                                                        @PositiveOrZero @RequestParam(defaultValue = "0") Integer from,
                                                        @Positive @RequestParam(defaultValue = "10") Integer size) {
+        log.info("Получен запрос на получение событий," +
+                " добавленных текущим пользователем id = {}", userId);
         return service.getEventsByUser(userId, from, size);
     }
 
     @GetMapping("/{eventId}/requests")
     public List<RequestDto> getRequests(@Positive @PathVariable Long userId,
                                         @Positive @PathVariable Long eventId) {
+        log.info("Получен запрос на получение информации о запросах на участие в событии id = {}," +
+                " текущего подьзователя id = {}", eventId, userId);
         return service.getParticipationRequests(userId, eventId);
     }
 
@@ -66,6 +77,8 @@ public class ControllerEventPrivate {
     public EventRequestStatusUpdateResult updateRequest(@PathVariable Long userId,
                                                         @PathVariable Long eventId,
                                                         @RequestBody EventRequestStatusUpdateRequest updateRequest) {
+        log.info("Получен запрос на изменение статуса заявок на участие в событии id = {}," +
+                " текущего подьзователя id = {}", eventId, userId);
         return service.updateRequestStatus(userId, eventId, updateRequest);
     }
 }

@@ -153,7 +153,7 @@ public class EventPrivateServiceImp implements EventPrivateService {
 
         for (Request request : requests) {
             if (!request.getStatus().equals(RequestStatus.PENDING)) {
-                throw new ConflictException("Заявка не находится в ожидании");
+                throw new ConflictException("Статус заявки должен быть PENDING");
             }
             if (event.getParticipantLimit() <= event.getConfirmedRequests()) {
                 request.setStatus(RequestStatus.REJECTED);
@@ -178,7 +178,7 @@ public class EventPrivateServiceImp implements EventPrivateService {
 
         for (Request request : requests) {
             if (!request.getStatus().equals(RequestStatus.PENDING)) {
-                throw new ConflictException("Заявка не находится в ожидании");
+                throw new ConflictException("Статус заявки должен быть PENDING");
             }
             request.setStatus(RequestStatus.REJECTED);
             requestRepository.save(request);

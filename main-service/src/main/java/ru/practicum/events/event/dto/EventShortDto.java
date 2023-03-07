@@ -17,21 +17,21 @@ import java.time.LocalDateTime;
 @AllArgsConstructor
 public class EventShortDto {
     private Long id;
-    @NotNull
-    @NotBlank
+    @NotNull(message ="annotation не должно быть пустым")
+    @NotBlank(message ="annotation не должно быть пустым")
     private String annotation;
-    @NotNull
+    @NotNull(message ="category не должно быть пустым")
     private CategoryDto category;
     private Long confirmedRequests;
     @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd HH:mm:ss")
     @Future()
     private LocalDateTime eventDate;
-    @NotNull
+    @NotNull(message ="initiator не должно быть пустым")
     private UserShortDto initiator;
-    @NotNull
+    @NotNull(message ="paid не должно быть пустым")
     private Boolean paid;
-    @NotNull
-    @NotBlank
+    @NotNull(message ="title не должно быть пустым")
+    @NotBlank(message ="title не должно быть пустым")
     private String title;
     private Long views;
 }

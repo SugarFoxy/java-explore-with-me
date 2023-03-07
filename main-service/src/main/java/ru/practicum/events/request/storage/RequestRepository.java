@@ -8,7 +8,7 @@ import ru.practicum.users.model.User;
 import java.util.List;
 
 public interface RequestRepository extends JpaRepository<Request, Long> {
-    List<Request> findByEventAndRequester(Event event, User requester);
+    Boolean existsRequestByEventAndRequester(Event event, User requester);
 
     List<Request> findByRequester(User requester);
 
