@@ -18,7 +18,11 @@ import static org.springframework.http.MediaType.APPLICATION_JSON;
 @Slf4j
 @Service
 public abstract class BaseClient {
-    WebClient client = WebClient.create("http://localhost:9090");
+    WebClient client;
+
+    public BaseClient(String uri){
+        client = WebClient.create(uri);
+    }
 
     protected List<StatsDto> get(String path, MultiValueMap<String, String> params) {
         Flux<StatsDto> flux = client

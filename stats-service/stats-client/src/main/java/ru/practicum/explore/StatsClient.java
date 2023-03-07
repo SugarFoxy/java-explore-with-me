@@ -7,12 +7,18 @@ import ru.practicum.explore.dto.HitDto;
 import ru.practicum.explore.dto.StatsDto;
 import ru.practicum.util.DateTimeUtils;
 
+import org.springframework.beans.factory.annotation.Value;
+
 import java.time.LocalDateTime;
 import java.util.*;
 import java.util.stream.Collectors;
 
 @Service
 public class StatsClient extends BaseClient{
+
+    public StatsClient(@Value("${stats-server.url}") String serverUrl){
+        super(serverUrl);
+    }
 
     public void hitRequest(HitDto hitDto) {
         post("/hit", hitDto);
