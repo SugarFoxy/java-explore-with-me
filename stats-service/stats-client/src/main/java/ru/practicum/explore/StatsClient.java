@@ -25,15 +25,13 @@ public class StatsClient extends BaseClient {
     }
 
     public Optional<Long> statsRequest(Long eventId) {
-        List<String> uris = List.of(String.format("/events/%d",eventId));
-
         String start = DateTimeUtils.getDateTime(LocalDateTime.now().minusMonths(6));
         String end = DateTimeUtils.getDateTime(LocalDateTime.now().plusSeconds(10));
 
         MultiValueMap<String, String> parameters = new LinkedMultiValueMap<>();
         parameters.add("start", start);
         parameters.add("end", end);
-        parameters.add("uris", uris.toString());
+        parameters.add("uris", String.format("/events/%d",eventId));
 
         List<StatsDto> statsArray = get("/stats", parameters);
         if (statsArray != null) {
@@ -56,7 +54,10 @@ public class StatsClient extends BaseClient {
         MultiValueMap<String, String> parameters = new LinkedMultiValueMap<>();
         parameters.add("start", start);
         parameters.add("end", end);
-        parameters.add("uris", uris.toString());
+
+        for(String uri : uris) {
+            parameters.add("uris", uri);
+        }
 
         List<StatsDto> statsArray = get("/stats", parameters);
         if (statsArray != null) {
