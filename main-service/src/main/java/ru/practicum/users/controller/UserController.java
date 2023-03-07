@@ -1,5 +1,6 @@
 package ru.practicum.users.controller;
 
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
@@ -16,6 +17,7 @@ import java.util.List;
 @RestController
 @RequestMapping(path = "/admin/users")
 @CustomExceptionHandler
+@Slf4j
 public class UserController {
     private final UserService service;
 
@@ -27,12 +29,14 @@ public class UserController {
     @PostMapping()
     @ResponseStatus(HttpStatus.CREATED)
     public UserDto createUser(@Valid @RequestBody UserCreateDto dto) {
+        log.info("Получен запрос на создание пользователя name = {}",dto.getName());
         return service.createUser(dto);
     }
 
     @DeleteMapping("/{id}")
     @ResponseStatus(HttpStatus.NO_CONTENT)
     public void deleteUser(@PathVariable long id) {
+        log.info("Получен запрос на удаление пользователя id = {}",id);
         service.deleteUser(id);
     }
 
@@ -40,6 +44,7 @@ public class UserController {
     public List<UserDto> findUsers(@RequestParam List<Long> ids,
                                    @PositiveOrZero @RequestParam(name = "from", defaultValue = "0") Integer from,
                                    @Positive @RequestParam(name = "size", defaultValue = "10") Integer size) {
+        log.info("Получение информации о пользователях ids = {}",ids);
         return service.findUsers(ids, from, size);
     }
 }

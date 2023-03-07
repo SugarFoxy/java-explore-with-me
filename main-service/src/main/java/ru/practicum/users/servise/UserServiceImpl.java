@@ -23,7 +23,7 @@ public class UserServiceImpl implements UserService {
         try {
             return UserMapper.toDto(userRepository.save(UserMapper.toUser(dto)));
         } catch (Exception e) {
-            throw new ConflictException("Пользователь с таким email  уже существует");
+            throw new ConflictException(String.format("Пользователь с таким email = %s уже существует", dto.getEmail()));
         }
     }
 

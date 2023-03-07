@@ -15,10 +15,10 @@ import javax.validation.constraints.NotNull;
 @NoArgsConstructor
 @AllArgsConstructor
 public class UserCreateDto {
-    @NotNull
-    @NotBlank
+    @NotNull(message = "Имя пользователя не может быть пустым")
+    @NotBlank(message = "Имя пользователя не может быть пустым")
     private String name;
-    @Email
-    @NotNull
+    @Email(message = "Email не может быть пустым")
+    @NotNull(message = "Email не может быть пустым")
     private String email;
 }
