@@ -20,7 +20,7 @@ import static org.springframework.http.MediaType.APPLICATION_JSON;
 public abstract class BaseClient {
     WebClient client;
 
-    public BaseClient(String uri){
+    public BaseClient(String uri) {
         client = WebClient.create(uri);
     }
 
