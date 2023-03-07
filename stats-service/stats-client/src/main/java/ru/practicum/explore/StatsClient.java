@@ -14,9 +14,9 @@ import java.util.*;
 import java.util.stream.Collectors;
 
 @Service
-public class StatsClient extends BaseClient{
+public class StatsClient extends BaseClient {
 
-    public StatsClient(@Value("${stats-server.url}") String serverUrl){
+    public StatsClient(@Value("${stats-server.url}") String serverUrl) {
         super(serverUrl);
     }
 
