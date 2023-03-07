@@ -32,7 +32,7 @@ public class StatsServiceImp implements StatsService {
         } else {
             return uri
                     .stream()
-                    .flatMap(url -> storage.getStats(parsStart, parsEnd, url, unique).stream())
+                    .flatMap(url -> storage.getStats(parsStart, parsEnd, url.substring(1,url.length()-1), unique).stream())
                     .sorted(StatsDto::compareTo)
                     .collect(Collectors.toList());
         }

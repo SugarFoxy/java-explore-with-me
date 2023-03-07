@@ -1,6 +1,7 @@
 package ru.practicum.explore;
 
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.stereotype.Service;
 import org.springframework.util.MultiValueMap;
 import org.springframework.web.reactive.function.client.ClientResponse;
 import org.springframework.web.reactive.function.client.WebClient;
@@ -15,6 +16,7 @@ import java.util.stream.Collectors;
 import static org.springframework.http.MediaType.APPLICATION_JSON;
 
 @Slf4j
+@Service
 public abstract class BaseClient {
     WebClient client = WebClient.create("http://localhost:9090");
 
@@ -37,9 +39,9 @@ public abstract class BaseClient {
                         .uri(path)
                         .body(Mono.just(body), HitDto.class)
                         .accept(APPLICATION_JSON)
-                        .exchange();
+                        .retrieve()
+                        .bodyToMono(ClientResponse.class);
         postResponse
                 .map(ClientResponse::statusCode).subscribe(httpStatus -> log.info(httpStatus.toString()));
-
     }
 }

@@ -1,13 +1,13 @@
 package ru.practicum.category.service.impl;
 
-import lombok.RequiredArgsConstructor;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.stereotype.Service;
 import ru.practicum.category.dto.CategoryDto;
 import ru.practicum.category.mapper.CategoryMapper;
 import ru.practicum.category.service.CategoryPublicService;
 import ru.practicum.category.storage.CategoryRepository;
-import ru.practicum.util.exception.NotFoundException;
+import ru.practicum.util.RepositoryObjectCreator;
 
 import java.util.List;
 import java.util.stream.Collectors;
@@ -15,9 +15,15 @@ import java.util.stream.Collectors;
 import static ru.practicum.category.mapper.CategoryMapper.toCategoryDto;
 
 @Service
-@RequiredArgsConstructor
 public class CategoryPublicServiceImp implements CategoryPublicService {
-    CategoryRepository categoryRepository;
+    private final CategoryRepository categoryRepository;
+    private final RepositoryObjectCreator checkExistence;
+
+    @Autowired
+    public CategoryPublicServiceImp(CategoryRepository categoryRepository, RepositoryObjectCreator checkExistence) {
+        this.categoryRepository = categoryRepository;
+        this.checkExistence = checkExistence;
+    }
 
     public List<CategoryDto> getAllCategories(Integer from, Integer size) {
         return categoryRepository.findAll(PageRequest.of(from, size)).stream()
@@ -26,7 +32,6 @@ public class CategoryPublicServiceImp implements CategoryPublicService {
     }
 
     public CategoryDto getCategoryById(Long id) {
-        return toCategoryDto(categoryRepository.findById(id)
-                .orElseThrow(() -> new NotFoundException("Категория отсутствует!")));
+        return toCategoryDto(checkExistence.getCategoryById(id));
     }
 }
