@@ -11,5 +11,5 @@ public interface EventPublicService {
 
     List<EventShortDto> getEventsByParamsCommon(String text, List<Long> categoryIds, Boolean paid,
                                                 String rangeStart, String rangeEnd, Boolean onlyAvailable,
-                                                String sort, int from, int size);
+                                                String sort, HttpServletRequest request, int from, int size);
 }

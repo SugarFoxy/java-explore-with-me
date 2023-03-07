@@ -53,7 +53,14 @@ public class EventPublicServiceImp implements EventPublicService {
 
     public List<EventShortDto> getEventsByParamsCommon(String text, List<Long> categoryIds, Boolean paid,
                                                        String rangeStart, String rangeEnd, Boolean onlyAvailable,
-                                                       String sort, int from, int size) {
+                                                       String sort, HttpServletRequest request, int from, int size) {
+        client.hitRequest(
+                new HitDto(null,
+                        "mainService",
+                        "/events",
+                        request.getRemoteAddr(),
+                        DateTimeUtils.getDateTime(LocalDateTime.now())));
+
         List<Category> categories = categoryIds != null ?
                 categoryIds
                         .stream()

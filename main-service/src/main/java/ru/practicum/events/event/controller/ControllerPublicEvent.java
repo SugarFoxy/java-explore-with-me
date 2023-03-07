@@ -33,6 +33,7 @@ public class ControllerPublicEvent {
                                                  @RequestParam(required = false) String rangeEnd,
                                                  @RequestParam(defaultValue = "false") Boolean onlyAvailable,
                                                  @RequestParam(defaultValue = "EVENT_DATE") String sort,
+                                                 HttpServletRequest request,
                                                  @PositiveOrZero @RequestParam(defaultValue = "0") Integer from,
                                                  @Positive @RequestParam(defaultValue = "10") Integer size
     ) {
@@ -40,7 +41,7 @@ public class ControllerPublicEvent {
                  " text ={}, categories = {}, paid = {}, rangeStart = {}, rangeEnd = {}, onlyAvailable = {}, sort = {}",
                 text, categories, paid, rangeStart, rangeEnd, onlyAvailable, sort);
         return service.getEventsByParamsCommon(text, categories, paid, rangeStart, rangeEnd,
-                onlyAvailable, sort, from, size);
+                onlyAvailable, sort, request, from, size);
     }
 
     @GetMapping("/{eventId}")
