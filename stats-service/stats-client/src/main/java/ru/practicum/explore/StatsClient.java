@@ -15,7 +15,9 @@ import java.util.stream.Collectors;
 
 @Service
 public class StatsClient extends BaseClient {
-    private final Integer START_DATE_OFFSET = 6;
+    // пыталась назвать START_DATE_OFFSET но git так
+    // не пускает((naming) MemberName: Member name 'START_DATE_OFFSET' must match pattern '^[a-z][a-zA-Z0-9]*$'.)
+    private final Integer StartDateOffset = 6;
 
     public StatsClient(@Value("${stats-server.url}") String serverUrl) {
         super(serverUrl);
@@ -26,7 +28,7 @@ public class StatsClient extends BaseClient {
     }
 
     public Optional<Long> statsRequest(Long eventId) {
-        String start = DateTimeUtils.getDateTime(LocalDateTime.now().minusMonths(START_DATE_OFFSET));
+        String start = DateTimeUtils.getDateTime(LocalDateTime.now().minusMonths(StartDateOffset));
         String end = DateTimeUtils.getDateTime(LocalDateTime.now());
 
         MultiValueMap<String, String> parameters = new LinkedMultiValueMap<>();
@@ -49,7 +51,7 @@ public class StatsClient extends BaseClient {
 
     public Map<Long, Long> viewsMapRequest(List<Long> eventIds) {
         List<String> uris = eventIds.stream().map(eventId -> "/events/" + eventId).collect(Collectors.toList());
-        String start = DateTimeUtils.getDateTime(LocalDateTime.now().minusMonths(START_DATE_OFFSET));
+        String start = DateTimeUtils.getDateTime(LocalDateTime.now().minusMonths(StartDateOffset));
         String end = DateTimeUtils.getDateTime(LocalDateTime.now());
 
         MultiValueMap<String, String> parameters = new LinkedMultiValueMap<>();
