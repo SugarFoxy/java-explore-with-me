@@ -2,6 +2,7 @@ package ru.practicum.events.event.service.impl;
 
 import org.springframework.stereotype.Service;
 import ru.practicum.category.model.Category;
+import ru.practicum.events.event.dto.EventAdminSearchDto;
 import ru.practicum.events.event.dto.EventFullDto;
 import ru.practicum.events.event.dto.UpdateEventRequest;
 import ru.practicum.events.event.mapper.EventMapper;
@@ -48,9 +49,15 @@ public class EventAdminServiceImp implements EventAdminService {
                         .map(objectCreator::getCategoryById)
                         .collect(Collectors.toList()) :
                 null;
-        LocalDateTime start = DateTimeUtils.parseDate(rangeStart);
-        LocalDateTime end = DateTimeUtils.parseDate(rangeEnd);
-        return eventRepository.findByParamsForAdmin(users, states, categories, start, end, from, size)
+        return eventRepository.findByParamsForAdmin(EventAdminSearchDto.builder()
+                        .users(users)
+                        .categories(categories)
+                        .states(states)
+                        .rangeStart(DateTimeUtils.parseDate(rangeStart))
+                        .rangeEnd(DateTimeUtils.parseDate(rangeEnd))
+                        .from(from)
+                        .size(size)
+                        .build())
                 .stream()
                 .map(EventMapper::toEventFullDto)
                 .collect(Collectors.toList());

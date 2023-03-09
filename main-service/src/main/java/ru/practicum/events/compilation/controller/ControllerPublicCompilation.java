@@ -2,10 +2,7 @@ package ru.practicum.events.compilation.controller;
 
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 import ru.practicum.events.compilation.dto.CompilationDto;
 import ru.practicum.events.compilation.service.CompilationPublicService;
 import ru.practicum.util.exception.handler.CustomExceptionHandler;
@@ -25,9 +22,11 @@ public class ControllerPublicCompilation {
     }
 
     @GetMapping
-    public List<CompilationDto> getAllCompilations() {
+    public List<CompilationDto> getAllCompilations(@RequestParam(required = false) Boolean pinned,
+                                                   @RequestParam(defaultValue = "0") int from,
+                                                   @RequestParam(defaultValue = "10") int size) {
         log.info("Получен запрос на получение подборок событий");
-        return service.getAllCompilations();
+        return service.getAllCompilations(pinned, from, size);
     }
 
     @GetMapping("{compId}")

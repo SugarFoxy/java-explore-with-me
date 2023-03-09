@@ -15,6 +15,7 @@ import java.util.stream.Collectors;
 
 @Service
 public class StatsClient extends BaseClient {
+    private final Integer START_DATE_OFFSET = 6;
 
     public StatsClient(@Value("${stats-server.url}") String serverUrl) {
         super(serverUrl);
@@ -25,20 +26,20 @@ public class StatsClient extends BaseClient {
     }
 
     public Optional<Long> statsRequest(Long eventId) {
-        String start = DateTimeUtils.getDateTime(LocalDateTime.now().minusMonths(6));
-        String end = DateTimeUtils.getDateTime(LocalDateTime.now().plusSeconds(10));
+        String start = DateTimeUtils.getDateTime(LocalDateTime.now().minusMonths(START_DATE_OFFSET));
+        String end = DateTimeUtils.getDateTime(LocalDateTime.now());
 
         MultiValueMap<String, String> parameters = new LinkedMultiValueMap<>();
         parameters.add("start", start);
         parameters.add("end", end);
         parameters.add("uris", String.format("/events/%d",eventId));
 
-        List<StatsDto> statsArray = get("/stats", parameters);
-        if (statsArray != null) {
-            if (statsArray.size() == 0) {
-                return Optional.of(0L);
+        List<StatsDto> stats = get("/stats", parameters);
+        if (stats != null) {
+            if (stats.isEmpty()) {
+                return Optional.empty();
             }
-            StatsDto viewStats = statsArray.get(0);
+            StatsDto viewStats = stats.get(0);
             if (viewStats != null) {
                 return Optional.of(viewStats.getHits());
             }
@@ -48,8 +49,8 @@ public class StatsClient extends BaseClient {
 
     public Map<Long, Long> viewsMapRequest(List<Long> eventIds) {
         List<String> uris = eventIds.stream().map(eventId -> "/events/" + eventId).collect(Collectors.toList());
-        String start = DateTimeUtils.getDateTime(LocalDateTime.now().minusMonths(6));
-        String end = DateTimeUtils.getDateTime(LocalDateTime.now().plusSeconds(10));
+        String start = DateTimeUtils.getDateTime(LocalDateTime.now().minusMonths(START_DATE_OFFSET));
+        String end = DateTimeUtils.getDateTime(LocalDateTime.now());
 
         MultiValueMap<String, String> parameters = new LinkedMultiValueMap<>();
         parameters.add("start", start);
@@ -73,5 +74,4 @@ public class StatsClient extends BaseClient {
             return new HashMap<>();
         }
     }
-
 }

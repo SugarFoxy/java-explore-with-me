@@ -42,8 +42,8 @@ public class UserController {
 
     @GetMapping()
     public List<UserDto> findUsers(@RequestParam List<Long> ids,
-                                   @PositiveOrZero @RequestParam(name = "from", defaultValue = "0") Integer from,
-                                   @Positive @RequestParam(name = "size", defaultValue = "10") Integer size) {
+                                   @PositiveOrZero @RequestParam(defaultValue = "0") Integer from,
+                                   @Positive @RequestParam(defaultValue = "10") Integer size) {
         log.info("Получение информации о пользователях ids = {}",ids);
         return service.findUsers(ids, from, size);
     }

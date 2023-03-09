@@ -4,6 +4,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import ru.practicum.category.model.Category;
 import ru.practicum.events.event.dto.EventFullDto;
+import ru.practicum.events.event.dto.EventPublicSearchDto;
 import ru.practicum.events.event.dto.EventShortDto;
 import ru.practicum.events.event.mapper.EventMapper;
 import ru.practicum.events.event.model.Event;
@@ -72,44 +73,40 @@ public class EventPublicServiceImp implements EventPublicService {
         }
         switch (sort) {
             case "EVENT_DATE":
-                return getSortedEventByDate(text, categories, paid, rangeStart, rangeEnd, onlyAvailable, from, size);
+                return getSortedEventByDate(EventPublicSearchDto.builder()
+                        .text(text)
+                        .categories(categories)
+                        .paid(paid)
+                        .rangeStart(DateTimeUtils.parseDate(rangeStart))
+                        .rangeEnd(DateTimeUtils.parseDate(rangeEnd))
+                        .onlyAvailable(onlyAvailable)
+                        .from(from)
+                        .size(size)
+                        .build());
             case "VIEWS":
-                return getSortedEventByViews(text, categories, paid, rangeStart, rangeEnd, onlyAvailable, from, size);
+                return getSortedEventByViews(EventPublicSearchDto.builder()
+                        .text(text)
+                        .categories(categories)
+                        .paid(paid)
+                        .rangeStart(DateTimeUtils.parseDate(rangeStart))
+                        .rangeEnd(DateTimeUtils.parseDate(rangeEnd))
+                        .onlyAvailable(onlyAvailable)
+                        .from(from)
+                        .size(size)
+                        .build());
             default:
                 throw new BadRequestException("Сортировать можно только по EVENT_DATE и VIEWS");
         }
     }
 
 
-    private List<EventShortDto> getSortedEventByDate(String text, List<Category> categories, Boolean paid,
-                                                     String rangeStart, String rangeEnd,
-                                                     boolean onlyAvailable, int from, int size) {
-        List<Event> gotEvents = eventRepository.findByParamsCommon(
-                text,
-                categories,
-                paid,
-                DateTimeUtils.parseDate(rangeStart),
-                DateTimeUtils.parseDate(rangeEnd),
-                onlyAvailable,
-                from,
-                size
-        );
+    private List<EventShortDto> getSortedEventByDate(EventPublicSearchDto searchDto) {
+        List<Event> gotEvents = eventRepository.findByParamsCommon(searchDto);
         return gotEvents.stream().map(EventMapper::toShortDto).collect(Collectors.toList());
     }
 
-    private List<EventShortDto> getSortedEventByViews(String text, List<Category> categories, Boolean paid,
-                                                      String rangeStart, String rangeEnd,
-                                                      boolean onlyAvailable, int from, int size) {
-        List<Event> gotEvents = eventRepository.findByParamsCommon(
-                text,
-                categories,
-                paid,
-                DateTimeUtils.parseDate(rangeStart),
-                DateTimeUtils.parseDate(rangeEnd),
-                onlyAvailable,
-                from,
-                size
-        );
+    private List<EventShortDto> getSortedEventByViews(EventPublicSearchDto searchDto) {
+        List<Event> gotEvents = eventRepository.findByParamsCommon(searchDto);
 
         Map<Long, Long> viewsMap = client.viewsMapRequest(gotEvents
                 .stream()
@@ -123,8 +120,8 @@ public class EventPublicServiceImp implements EventPublicService {
         });
         return gotEvents
                 .stream()
-                .skip(from)
-                .limit(size)
+                .skip(searchDto.getFrom())
+                .limit(searchDto.getSize())
                 .map(EventMapper::toShortDto)
                 .collect(Collectors.toList());
     }

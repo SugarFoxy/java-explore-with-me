@@ -25,8 +25,8 @@ public class ControllerPublicCategory {
 
     @GetMapping
     public List<CategoryDto> findCategories(
-            @RequestParam(required = false, defaultValue = "0") Integer from,
-            @RequestParam(required = false, defaultValue = "10") Integer size) {
+            @RequestParam(defaultValue = "0") Integer from,
+            @RequestParam(defaultValue = "10") Integer size) {
         log.info("Получен запрос получение категорий");
         return categoryService.getAllCategories(from, size);
     }

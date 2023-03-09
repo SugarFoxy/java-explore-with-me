@@ -1,6 +1,7 @@
 package ru.practicum.events.compilation.service.impl;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.PageRequest;
 import org.springframework.stereotype.Service;
 import ru.practicum.events.compilation.dto.CompilationDto;
 import ru.practicum.events.compilation.mapper.CompilationMapper;
@@ -24,8 +25,8 @@ public class CompilationPublicServiceImp implements CompilationPublicService {
     }
 
     @Override
-    public List<CompilationDto> getAllCompilations() {
-        return compilationRepository.findAll()
+    public List<CompilationDto> getAllCompilations(Boolean pinned, int from, int size) {
+        return compilationRepository.findAllByPinned(pinned, PageRequest.of(from,size))
                 .stream()
                 .map(CompilationMapper::toCompilationDto)
                 .collect(Collectors.toList());

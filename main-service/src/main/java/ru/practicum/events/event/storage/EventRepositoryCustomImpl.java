@@ -1,10 +1,9 @@
 package ru.practicum.events.event.storage;
 
 import org.springframework.stereotype.Repository;
-import ru.practicum.category.model.Category;
+import ru.practicum.events.event.dto.EventAdminSearchDto;
+import ru.practicum.events.event.dto.EventPublicSearchDto;
 import ru.practicum.events.event.model.Event;
-import ru.practicum.events.event.model.EventState;
-import ru.practicum.users.model.User;
 
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
@@ -12,7 +11,6 @@ import javax.persistence.criteria.CriteriaBuilder;
 import javax.persistence.criteria.CriteriaQuery;
 import javax.persistence.criteria.Predicate;
 import javax.persistence.criteria.Root;
-import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -22,58 +20,67 @@ public class EventRepositoryCustomImpl implements EventRepositoryCustom {
     private EntityManager entityManager;
 
     @Override
-    public List<Event> findByParamsCommon(String text, List<Category> categories, Boolean paid,
-                                          LocalDateTime rangeStart, LocalDateTime rangeEnd, boolean onlyAvailable,
-                                          int from, int size) {
-        CriteriaBuilder cb = entityManager.getCriteriaBuilder();
-        CriteriaQuery<Event> q = cb.createQuery(Event.class);
-        Root<Event> eventRoot = q.from(Event.class);
+    public List<Event> findByParamsCommon(EventPublicSearchDto searchDto) {
+        CriteriaBuilder builder = entityManager.getCriteriaBuilder();
+        CriteriaQuery<Event> query = builder.createQuery(Event.class);
+        Root<Event> eventRoot = query.from(Event.class);
         List<Predicate> predicates = new ArrayList<>();
-        if (text != null)
-            predicates.add(cb.or(
-                    cb.like(eventRoot.get("annotation"), "%" + text + "%"),
-                    cb.like(eventRoot.get("description"), "%" + text + "%")
+        if (searchDto.getText() != null) {
+            predicates.add(builder.or(
+                    builder.like(eventRoot.get("annotation"), "%" + searchDto.getText() + "%"),
+                    builder.like(eventRoot.get("description"), "%" + searchDto.getText() + "%")
             ));
-        if (categories != null)
-            predicates.add(eventRoot.get("category").in(categories));
-        if (paid != null)
-            predicates.add(cb.equal(eventRoot.get("paid"), paid));
-        if (rangeStart != null)
-            predicates.add(cb.greaterThanOrEqualTo(eventRoot.get("eventDate"), rangeStart));
-        if (rangeEnd != null)
-            predicates.add(cb.lessThanOrEqualTo(eventRoot.get("eventDate"), rangeEnd));
-        if (onlyAvailable)
-            predicates.add(cb.or(cb.equal(eventRoot.get("participant_limit"), 0),
-                    cb.greaterThan(eventRoot.get("participant_limit"), eventRoot.get("confirmed_requests"))));
-        q.select(eventRoot).where(cb.and(predicates.toArray(new Predicate[predicates.size()])));
-        q.orderBy(cb.asc(eventRoot.get("eventDate")));
-        return entityManager.createQuery(q).setFirstResult(from).setMaxResults(size).getResultList();
+        }
+        if (searchDto.getCategories() != null) {
+            predicates.add(eventRoot.get("category").in(searchDto.getCategories()));
+        }
+        if (searchDto.getPaid() != null) {
+            predicates.add(builder.equal(eventRoot.get("paid"), searchDto.getPaid()));
+        }
+        if (searchDto.getRangeStart() != null) {
+            predicates.add(builder.greaterThanOrEqualTo(eventRoot.get("eventDate"), searchDto.getRangeStart()));
+        }
+        if (searchDto.getRangeEnd() != null) {
+            predicates.add(builder.lessThanOrEqualTo(eventRoot.get("eventDate"), searchDto.getRangeEnd()));
+        }
+        if (searchDto.getOnlyAvailable()) {
+            predicates.add(builder.or(builder.equal(eventRoot.get("participant_limit"), 0),
+                    builder.greaterThan(eventRoot.get("participant_limit"), eventRoot.get("confirmed_requests"))));
+        }
+        query.select(eventRoot).where(builder.and(predicates.toArray(new Predicate[predicates.size()])));
+        query.orderBy(builder.asc(eventRoot.get("eventDate")));
+        return entityManager.createQuery(query)
+                .setFirstResult(searchDto.getFrom())
+                .setMaxResults(searchDto.getSize())
+                .getResultList();
     }
 
     @Override
-    public List<Event> findByParamsForAdmin(List<User> users, List<EventState> states, List<Category> categories,
-                                            LocalDateTime rangeStart, LocalDateTime rangeEnd, int from, int size) {
-        CriteriaBuilder cb = entityManager.getCriteriaBuilder();
-        CriteriaQuery<Event> q = cb.createQuery(Event.class);
-        Root<Event> eventRoot = q.from(Event.class);
+    public List<Event> findByParamsForAdmin(EventAdminSearchDto searchDto) {
+        CriteriaBuilder builder = entityManager.getCriteriaBuilder();
+        CriteriaQuery<Event> query = builder.createQuery(Event.class);
+        Root<Event> eventRoot = query.from(Event.class);
         List<Predicate> predicates = new ArrayList<>();
-        if (users != null) {
-            predicates.add(eventRoot.get("initiator").in(users));
+        if (searchDto.getUsers() != null) {
+            predicates.add(eventRoot.get("initiator").in(searchDto.getUsers()));
         }
-        if (states != null) {
-            predicates.add(eventRoot.get("state").in(states));
+        if (searchDto.getStates() != null) {
+            predicates.add(eventRoot.get("state").in(searchDto.getStates()));
         }
-        if (categories != null) {
-            predicates.add(eventRoot.get("category").in(categories));
+        if (searchDto.getCategories() != null) {
+            predicates.add(eventRoot.get("category").in(searchDto.getCategories()));
         }
-        if (rangeStart != null) {
-            predicates.add(cb.greaterThanOrEqualTo(eventRoot.get("eventDate"), rangeStart));
+        if (searchDto.getRangeStart() != null) {
+            predicates.add(builder.greaterThanOrEqualTo(eventRoot.get("eventDate"), searchDto.getRangeStart()));
         }
-        if (rangeEnd != null) {
-            predicates.add(cb.lessThanOrEqualTo(eventRoot.get("eventDate"), rangeEnd));
+        if (searchDto.getRangeEnd() != null) {
+            predicates.add(builder.lessThanOrEqualTo(eventRoot.get("eventDate"), searchDto.getRangeEnd()));
         }
-        q.select(eventRoot).where(cb.and(predicates.toArray(new Predicate[predicates.size()])));
-        return entityManager.createQuery(q).setFirstResult(from).setMaxResults(size).getResultList();
+        query.select(eventRoot).where(builder.and(predicates.toArray(new Predicate[predicates.size()])));
+        return entityManager.createQuery(query)
+                .setFirstResult(searchDto.getFrom())
+                .setMaxResults(searchDto.getSize())
+                .getResultList();
     }
 }
 
