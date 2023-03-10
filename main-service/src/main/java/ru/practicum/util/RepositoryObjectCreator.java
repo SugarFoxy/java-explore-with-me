@@ -4,6 +4,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import ru.practicum.category.model.Category;
 import ru.practicum.category.storage.CategoryRepository;
+import ru.practicum.events.comments.model.Comment;
+import ru.practicum.events.comments.storage.CommentRepository;
 import ru.practicum.events.compilation.model.Compilation;
 import ru.practicum.events.compilation.storage.CompilationRepository;
 import ru.practicum.events.event.model.Event;
@@ -21,18 +23,21 @@ public class RepositoryObjectCreator {
     private final EventRepository eventRepository;
     private final RequestRepository requestRepository;
     private final CompilationRepository compilationRepository;
+    private final CommentRepository commentRepository;
 
     @Autowired
     public RepositoryObjectCreator(UserRepository userRepository,
                                    CategoryRepository categoryRepository,
                                    EventRepository eventRepository,
                                    RequestRepository requestRepository,
-                                   CompilationRepository compilationRepository) {
+                                   CompilationRepository compilationRepository,
+                                   CommentRepository commentRepository) {
         this.userRepository = userRepository;
         this.categoryRepository = categoryRepository;
         this.eventRepository = eventRepository;
         this.requestRepository = requestRepository;
         this.compilationRepository = compilationRepository;
+        this.commentRepository = commentRepository;
     }
 
     public User getUserById(Long id) {
@@ -60,6 +65,10 @@ public class RepositoryObjectCreator {
                 .orElseThrow(() -> new NotFoundException(getMassage("Подборка", compId)));
     }
 
+    public Comment getCommentById(Long commId) {
+        return commentRepository.findById(commId)
+                .orElseThrow(() -> new NotFoundException(getMassage("Комментарий", commId)));
+    }
     public Boolean isRelatedCategory(Long id) {
         return eventRepository.existsByCategory(getCategoryById(id));
     }
@@ -67,4 +76,6 @@ public class RepositoryObjectCreator {
     private String getMassage(String model, Long id) {
         return String.format("%s id = %d отсутствует", model, id);
     }
+
+
 }
