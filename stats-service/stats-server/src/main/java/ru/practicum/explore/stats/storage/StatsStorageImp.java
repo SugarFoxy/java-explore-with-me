@@ -22,18 +22,18 @@ public class StatsStorageImp implements StatsStorage {
 
     @Override
     public List<StatsDto> getStats(LocalDateTime start, LocalDateTime end, String uri, boolean unique) {
-        CriteriaBuilder cb = entityManager.getCriteriaBuilder();
-        CriteriaQuery<StatsDto> cr = cb.createQuery(StatsDto.class);
-        Root<Hit> root = cr.from(Hit.class);
-        cr.multiselect(root.get("app"), root.get("uri"), unique ? cb.countDistinct(root.get("ip")) : cb.count(root));
-        cr.groupBy(root.get("app"), root.get("uri"));
+        CriteriaBuilder builder = entityManager.getCriteriaBuilder();
+        CriteriaQuery<StatsDto> query = builder.createQuery(StatsDto.class);
+        Root<Hit> root = query.from(Hit.class);
+        query.multiselect(root.get("app"), root.get("uri"), unique ? builder.countDistinct(root.get("ip")) : builder.count(root));
+        query.groupBy(root.get("app"), root.get("uri"));
         if (uri == null) {
-            cr.where(cb.between(root.get("timestamp"),start,end));
+            query.where(builder.between(root.get("timestamp"),start,end));
         } else {
-            cr.where(cb.and(cb.between(root.get("timestamp"),start,end),
-                    cb.equal(root.get("uri"), uri)));
+            query.where(builder.and(builder.between(root.get("timestamp"),start,end),
+                    builder.equal(root.get("uri"), uri)));
         }
-        TypedQuery<StatsDto> query = entityManager.createQuery(cr);
-        return query.getResultList();
+        TypedQuery<StatsDto> typedQuery = entityManager.createQuery(query);
+        return typedQuery.getResultList();
     }
 }
