@@ -8,8 +8,10 @@ import ru.practicum.events.comments.dto.CommentDto;
 import ru.practicum.events.comments.mapper.CommentMapper;
 import ru.practicum.events.comments.rating.storage.RatingRepository;
 import ru.practicum.events.comments.storage.CommentRepository;
+import ru.practicum.events.event.model.Event;
 import ru.practicum.util.RepositoryObjectCreator;
 
+import java.util.ArrayList;
 import java.util.Comparator;
 import java.util.List;
 import java.util.stream.Collectors;
@@ -34,16 +36,20 @@ public class CommentPublicServiceImpl implements CommentPublicService {
 
     @Override
     public List<CommentDto> getCommentByEvent(Long eventId, Boolean rating, int from, int size) {
+        Event event = objectCreator.getEventById(eventId);
+        if (!event.getCommentSwitch()) {
+            return new ArrayList<>();
+        }
         Sort sort1 = Sort.by(DESC, "comment_time");
-        Stream<CommentDto> commentDtoStream =commentRepository
-                .findCommentsByEvent(objectCreator.getEventById(eventId), PageRequest.of(from, size, sort1))
+        Stream<CommentDto> commentDtoStream = commentRepository
+                .findCommentsByEvent(event, PageRequest.of(from, size, sort1))
                 .stream()
                 .map(comment -> CommentMapper
                         .toDto(comment,
-                                ratingRepository.countGradeByCommentAndGrade(comment,true)
-                                        - ratingRepository.countGradeByCommentAndGrade(comment,false)));
-        if (rating){
-           commentDtoStream = commentDtoStream.sorted(Comparator.comparingLong(CommentDto::getRating).reversed());
+                                ratingRepository.countGradeByCommentAndGrade(comment, true)
+                                        - ratingRepository.countGradeByCommentAndGrade(comment, false)));
+        if (rating) {
+            commentDtoStream = commentDtoStream.sorted(Comparator.comparingLong(CommentDto::getRating).reversed());
         }
         return commentDtoStream.collect(Collectors.toList());
     }

@@ -59,9 +59,11 @@ public class EventPrivateServiceImp implements EventPrivateService {
     @Override
     public EventFullDto addNewEvent(Long userId, NewEventDto newEventDto) {
         CheckTime.checkTemporaryValidation(newEventDto.getEventDate(), LocalDateTime.now(), 2);
-        return toEventFullDto(eventRepository.save(toEvent(newEventDto,
+        Event event =toEvent(newEventDto,
                 objectCreator.getUserById(userId),
-                objectCreator.getCategoryById(newEventDto.getCategory()), 0L, 0L)));
+                objectCreator.getCategoryById(newEventDto.getCategory()), 0L, 0L);
+        event.setCommentSwitch(true);
+        return toEventFullDto(eventRepository.save(event));
     }
 
     @Override
@@ -145,6 +147,17 @@ public class EventPrivateServiceImp implements EventPrivateService {
             default:
                 throw new BadRequestException("Некорректный статус изменения");
         }
+    }
+
+    @Override
+    public void enableComment(Long userId, Long eventId, Boolean cutout) {
+        User user = objectCreator.getUserById(userId);
+        Event event = objectCreator.getEventById(eventId);
+        if (event.getInitiator().equals(user)){
+            throw new BadRequestException("Включать и выключать коментарии может только инициализатор события");
+        }
+        event.setCommentSwitch(cutout);
+        eventRepository.save(event);
     }
 
     private EventRequestStatusUpdateResult getUpdateResultConfirmed(List<Request> requests, Event event) {

@@ -47,6 +47,13 @@ public class ControllerEventPrivate {
         return service.update(userId, eventId, dto);
     }
 
+    @PatchMapping("/{eventId}/comment")
+    public void enableComment(@Positive @PathVariable Long userId,
+                              @Positive @PathVariable Long eventId,
+                              @RequestParam Boolean cutout){
+        service.enableComment(userId, eventId, cutout);
+    }
+
     @GetMapping("/{eventId}")
     public EventFullDto getEventByIdWhereUserIsOwner(@Positive @PathVariable Long userId,
                                                      @Positive @PathVariable Long eventId) {

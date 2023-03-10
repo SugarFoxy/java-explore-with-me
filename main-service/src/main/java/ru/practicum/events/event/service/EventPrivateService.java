@@ -24,4 +24,6 @@ public interface EventPrivateService {
     EventRequestStatusUpdateResult updateRequestStatus(Long userId,
                                                               Long eventId,
                                                               EventRequestStatusUpdateRequest updateRequest);
+
+    void enableComment(Long userId, Long eventId, Boolean cutout);
 }

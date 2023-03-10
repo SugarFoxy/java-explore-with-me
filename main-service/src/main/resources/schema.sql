@@ -36,6 +36,7 @@ CREATE TABLE IF NOT EXISTS events
     state              VARCHAR,
     title              VARCHAR(255)                            NOT NULL,
     views              BIGINT,
+    comment_switch     BOOLEAN,
 
     CONSTRAINT pk_events PRIMARY KEY (id),
     FOREIGN KEY (initiator_id) REFERENCES users (id) ON DELETE CASCADE,
