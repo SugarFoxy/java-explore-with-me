@@ -36,7 +36,7 @@ public class CommentPrivateServiceImpl implements CommentPrivateService {
     @Override
     public CommentDto createComment(Long userId, NewAndUpdateCommentDto dto) {
         Event event = objectCreator.getEventById(dto.getEventId());
-        if (!event.getCommentSwitch()){
+        if (!event.getCommentSwitch()) {
             throw new ConflictException("Невозможно добавить комментарий! У события отключены комментарии!");
         }
         return CommentMapper.toDto(commentRepository.save(CommentMapper.toComment(

@@ -69,6 +69,7 @@ public class RepositoryObjectCreator {
         return commentRepository.findById(commId)
                 .orElseThrow(() -> new NotFoundException(getMassage("Комментарий", commId)));
     }
+
     public Boolean isRelatedCategory(Long id) {
         return eventRepository.existsByCategory(getCategoryById(id));
     }

@@ -42,7 +42,7 @@ public class CommentPublicServiceImpl implements CommentPublicService {
             return new ArrayList<>();
         }
         Sort sort1 = Sort.by(DESC, "commentTime");
-        List<Comment> comments =commentRepository
+        List<Comment> comments = commentRepository
                 .findByEvent(event, PageRequest.of(from, size, sort1));
         Stream<CommentDto> commentDtoStream = comments
                 .stream()

@@ -59,7 +59,7 @@ public class EventPrivateServiceImp implements EventPrivateService {
     @Override
     public EventFullDto addNewEvent(Long userId, NewEventDto newEventDto) {
         CheckTime.checkTemporaryValidation(newEventDto.getEventDate(), LocalDateTime.now(), 2);
-        Event event =toEvent(newEventDto,
+        Event event = toEvent(newEventDto,
                 objectCreator.getUserById(userId),
                 objectCreator.getCategoryById(newEventDto.getCategory()), 0L, 0L);
         event.setCommentSwitch(true);
@@ -153,7 +153,7 @@ public class EventPrivateServiceImp implements EventPrivateService {
     public EventFullDto enableComment(Long userId, Long eventId, Boolean disable) {
         User user = objectCreator.getUserById(userId);
         Event event = objectCreator.getEventById(eventId);
-        if (!event.getInitiator().equals(user)){
+        if (!event.getInitiator().equals(user)) {
             throw new BadRequestException("Включать и выключать коментарии может только инициализатор события");
         }
         event.setCommentSwitch(disable);

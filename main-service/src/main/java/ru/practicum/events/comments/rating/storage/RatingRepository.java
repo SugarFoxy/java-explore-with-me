@@ -7,6 +7,8 @@ import ru.practicum.users.model.User;
 
 public interface RatingRepository extends JpaRepository<Grade, Long> {
     Long countGradeByCommentAndGrade(Comment comment, Boolean grade);
+
     Boolean existsByCommentAndRater(Comment comment, User rater);
+
     void deleteByCommentAndRater(Comment comment, User user);
 }
