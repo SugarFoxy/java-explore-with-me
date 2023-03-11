@@ -2,7 +2,10 @@ package ru.practicum.events.event.service.impl;
 
 import org.springframework.data.domain.PageRequest;
 import org.springframework.stereotype.Service;
-import ru.practicum.events.event.dto.*;
+import ru.practicum.events.event.dto.EventFullDto;
+import ru.practicum.events.event.dto.EventShortDto;
+import ru.practicum.events.event.dto.NewEventDto;
+import ru.practicum.events.event.dto.UpdateEventRequest;
 import ru.practicum.events.event.mapper.EventMapper;
 import ru.practicum.events.event.model.Event;
 import ru.practicum.events.event.model.EventState;
