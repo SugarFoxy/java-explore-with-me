@@ -2,6 +2,7 @@ package ru.practicum.events.comments.service;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 import ru.practicum.events.comments.dto.CommentDto;
 import ru.practicum.events.comments.dto.NewAndUpdateCommentDto;
 import ru.practicum.events.comments.mapper.CommentMapper;
@@ -72,13 +73,13 @@ public class CommentPrivateServiceImpl implements CommentPrivateService {
 
         if (!comment.getCommentator().equals(user)) {
             throw new BadRequestException(String
-                    .format("Только комментатор id = %d может удалить коментарий id = %d ", userId, commId));
+                    .format("Только комментатор может удалить коментарий id = %d ", commId));
         }
         commentRepository.deleteById(commId);
     }
 
     @Override
-    public void leaveRating(Long userId, Long commId, Boolean grade) {
+    public CommentDto leaveRating(Long userId, Long commId, Boolean grade) {
         if (ratingRepository
                 .existsByCommentAndRater(objectCreator.getCommentById(commId), objectCreator.getUserById(userId))) {
             throw new ConflictException("Отавить оценку комментарию можно один раз");
@@ -88,11 +89,21 @@ public class CommentPrivateServiceImpl implements CommentPrivateService {
                 .rater(objectCreator.getUserById(userId))
                 .grade(grade)
                 .build());
+        Comment comment = objectCreator.getCommentById(commId);
+        return CommentMapper.toDto(comment, ratingRepository.countGradeByCommentAndGrade(comment, true)
+                - ratingRepository.countGradeByCommentAndGrade(comment, false));
     }
 
     @Override
+    @Transactional
     public void deleteRating(Long userId, Long commId) {
+        Comment comment = objectCreator.getCommentById(commId);
+        User user = objectCreator.getUserById(userId);
+        if (!ratingRepository.existsByCommentAndRater(comment, user)) {
+            throw new BadRequestException(String.format("Невозможно удалеть лайк! " +
+                    "Пользователь id = %d не ставил оценку комментарию id = %d", userId, commId));
+        }
         ratingRepository
-                .deleteByCommentAndRater(objectCreator.getCommentById(commId), objectCreator.getUserById(userId));
+                .deleteByCommentAndRater(comment, user);
     }
 }

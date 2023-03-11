@@ -2,10 +2,7 @@ package ru.practicum.events.event.service.impl;
 
 import org.springframework.data.domain.PageRequest;
 import org.springframework.stereotype.Service;
-import ru.practicum.events.event.dto.EventFullDto;
-import ru.practicum.events.event.dto.EventShortDto;
-import ru.practicum.events.event.dto.NewEventDto;
-import ru.practicum.events.event.dto.UpdateEventRequest;
+import ru.practicum.events.event.dto.*;
 import ru.practicum.events.event.mapper.EventMapper;
 import ru.practicum.events.event.model.Event;
 import ru.practicum.events.event.model.EventState;
@@ -150,14 +147,14 @@ public class EventPrivateServiceImp implements EventPrivateService {
     }
 
     @Override
-    public void enableComment(Long userId, Long eventId, Boolean cutout) {
+    public EventFullDto enableComment(Long userId, Long eventId, Boolean disable) {
         User user = objectCreator.getUserById(userId);
         Event event = objectCreator.getEventById(eventId);
-        if (event.getInitiator().equals(user)){
+        if (!event.getInitiator().equals(user)){
             throw new BadRequestException("Включать и выключать коментарии может только инициализатор события");
         }
-        event.setCommentSwitch(cutout);
-        eventRepository.save(event);
+        event.setCommentSwitch(disable);
+        return toEventFullDto(eventRepository.save(event));
     }
 
     private EventRequestStatusUpdateResult getUpdateResultConfirmed(List<Request> requests, Event event) {

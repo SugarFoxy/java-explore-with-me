@@ -10,7 +10,7 @@ public interface CommentPrivateService {
 
     void deleteComment(Long userId, Long commId);
 
-    void leaveRating(Long userId, Long commId, Boolean grade);
+    CommentDto leaveRating(Long userId, Long commId, Boolean grade);
 
     void deleteRating(Long userId, Long commId);
 }

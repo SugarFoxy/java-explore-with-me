@@ -75,6 +75,7 @@ public class EventMapper {
                 .state(event.getState())
                 .title(event.getTitle())
                 .views(event.getViews())
+                .commentSwitch(event.getCommentSwitch())
                 .build();
     }
 

@@ -7,6 +7,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 import ru.practicum.events.comments.dto.CommentDto;
 import ru.practicum.events.comments.service.CommentPublicService;
+import ru.practicum.util.exception.handler.CustomExceptionHandler;
 
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Positive;
@@ -15,6 +16,7 @@ import java.util.List;
 
 @RestController
 @RequestMapping("/comment")
+@CustomExceptionHandler
 public class ControllerPublicComment {
     private final CommentPublicService service;
 
@@ -30,5 +32,4 @@ public class ControllerPublicComment {
                                               @Positive @RequestParam(defaultValue = "10") int size) {
         return service.getCommentByEvent(eventId, rating, from, size);
     }
-
 }

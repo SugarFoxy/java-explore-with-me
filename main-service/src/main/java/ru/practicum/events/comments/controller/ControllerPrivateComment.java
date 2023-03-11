@@ -6,9 +6,11 @@ import org.springframework.web.bind.annotation.*;
 import ru.practicum.events.comments.dto.CommentDto;
 import ru.practicum.events.comments.dto.NewAndUpdateCommentDto;
 import ru.practicum.events.comments.service.CommentPrivateService;
+import ru.practicum.util.exception.handler.CustomExceptionHandler;
 
 @RestController
 @RequestMapping("/users/{userId}/comments")
+@CustomExceptionHandler
 public class ControllerPrivateComment {
     private final CommentPrivateService service;
 
@@ -32,6 +34,7 @@ public class ControllerPrivateComment {
     }
 
     @DeleteMapping("/{commId}")
+    @ResponseStatus(HttpStatus.NO_CONTENT)
     public void deleteComment(@PathVariable Long userId,
                               @PathVariable Long commId) {
         service.deleteComment(userId, commId);
@@ -39,14 +42,14 @@ public class ControllerPrivateComment {
 
     @PostMapping("/{commId}/like")
     @ResponseStatus(HttpStatus.CREATED)
-    public void leaveRating(@PathVariable Long userId,
+    public CommentDto leaveRating(@PathVariable Long userId,
                                     @PathVariable Long commId,
                                     @RequestParam Boolean grade) {
-        service.leaveRating(userId, commId, grade);
+        return service.leaveRating(userId, commId, grade);
     }
 
     @DeleteMapping("/{commId}/like")
-    @ResponseStatus(HttpStatus.CREATED)
+    @ResponseStatus(HttpStatus.NO_CONTENT)
     public void deleteRating(@PathVariable Long userId,
                             @PathVariable Long commId) {
         service.deleteRating(userId, commId);

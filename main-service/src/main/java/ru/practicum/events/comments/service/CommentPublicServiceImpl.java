@@ -6,6 +6,7 @@ import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 import ru.practicum.events.comments.dto.CommentDto;
 import ru.practicum.events.comments.mapper.CommentMapper;
+import ru.practicum.events.comments.model.Comment;
 import ru.practicum.events.comments.rating.storage.RatingRepository;
 import ru.practicum.events.comments.storage.CommentRepository;
 import ru.practicum.events.event.model.Event;
@@ -40,9 +41,10 @@ public class CommentPublicServiceImpl implements CommentPublicService {
         if (!event.getCommentSwitch()) {
             return new ArrayList<>();
         }
-        Sort sort1 = Sort.by(DESC, "comment_time");
-        Stream<CommentDto> commentDtoStream = commentRepository
-                .findCommentsByEvent(event, PageRequest.of(from, size, sort1))
+        Sort sort1 = Sort.by(DESC, "commentTime");
+        List<Comment> comments =commentRepository
+                .findByEvent(event, PageRequest.of(from, size, sort1));
+        Stream<CommentDto> commentDtoStream = comments
                 .stream()
                 .map(comment -> CommentMapper
                         .toDto(comment,

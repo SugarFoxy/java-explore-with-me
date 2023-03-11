@@ -8,5 +8,5 @@ import ru.practicum.events.event.model.Event;
 import java.util.List;
 
 public interface CommentRepository extends JpaRepository<Comment, Long> {
-    List<Comment> findCommentsByEvent(Event event, Pageable pageable);
+    List<Comment> findByEvent(Event event, Pageable pageable);
 }
