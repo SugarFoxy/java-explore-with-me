@@ -115,6 +115,7 @@ public class EventMapper {
                         eventRequest.getTitle() :
                         event.getTitle())
                 .views(event.getViews())
+                .commentSwitch(event.getCommentSwitch())
                 .build();
     }
 
@@ -136,6 +137,7 @@ public class EventMapper {
                 .state(eventDto.getState())
                 .title(eventDto.getTitle())
                 .views(eventDto.getViews())
+                .commentSwitch(eventDto.getCommentSwitch())
                 .build();
     }
 }
