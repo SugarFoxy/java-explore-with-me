@@ -4,7 +4,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
-import ru.practicum.events.comments.dto.CommentDto;
+import ru.practicum.events.comments.dto.OutCommentDto;
 import ru.practicum.events.comments.mapper.CommentMapper;
 import ru.practicum.events.comments.model.Comment;
 import ru.practicum.events.comments.rating.storage.RatingRepository;
@@ -36,22 +36,22 @@ public class CommentPublicServiceImpl implements CommentPublicService {
     }
 
     @Override
-    public List<CommentDto> getCommentByEvent(Long eventId, Boolean rating, int from, int size) {
+    public List<OutCommentDto> getCommentByEvent(Long eventId, Boolean rating, int from, int size) {
         Event event = objectCreator.getEventById(eventId);
         if (!event.getCommentSwitch()) {
             return new ArrayList<>();
         }
-        Sort sort1 = Sort.by(DESC, "commentTime");
+        Sort sort = Sort.by(DESC, "commentTime");
         List<Comment> comments = commentRepository
-                .findByEvent(event, PageRequest.of(from, size, sort1));
-        Stream<CommentDto> commentDtoStream = comments
+                .findByEvent(event, PageRequest.of(from, size, sort));
+        Stream<OutCommentDto> commentDtoStream = comments
                 .stream()
                 .map(comment -> CommentMapper
                         .toDto(comment,
                                 ratingRepository.countGradeByCommentAndGrade(comment, true)
                                         - ratingRepository.countGradeByCommentAndGrade(comment, false)));
         if (rating) {
-            commentDtoStream = commentDtoStream.sorted(Comparator.comparingLong(CommentDto::getRating).reversed());
+            commentDtoStream = commentDtoStream.sorted(Comparator.comparingLong(OutCommentDto::getRating).reversed());
         }
         return commentDtoStream.collect(Collectors.toList());
     }

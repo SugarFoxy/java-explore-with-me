@@ -5,7 +5,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
-import ru.practicum.events.comments.dto.CommentDto;
+import ru.practicum.events.comments.dto.OutCommentDto;
 import ru.practicum.events.comments.service.CommentPublicService;
 import ru.practicum.util.exception.handler.CustomExceptionHandler;
 
@@ -26,10 +26,10 @@ public class ControllerPublicComment {
     }
 
     @GetMapping
-    public List<CommentDto> getCommentByEvent(@NotNull @RequestParam Long eventId,
-                                              @RequestParam(defaultValue = "false") Boolean rating,
-                                              @PositiveOrZero @RequestParam(defaultValue = "0") int from,
-                                              @Positive @RequestParam(defaultValue = "10") int size) {
+    public List<OutCommentDto> getCommentByEvent(@NotNull @RequestParam Long eventId,
+                                                 @RequestParam(defaultValue = "false") Boolean rating,
+                                                 @PositiveOrZero @RequestParam(defaultValue = "0") int from,
+                                                 @Positive @RequestParam(defaultValue = "10") int size) {
         return service.getCommentByEvent(eventId, rating, from, size);
     }
 }
