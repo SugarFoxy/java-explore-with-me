@@ -11,7 +11,9 @@ import java.util.List;
 import java.util.stream.Collectors;
 
 public final class CompilationMapper {
-    private CompilationMapper(){}
+    private CompilationMapper() {
+
+    }
 
     public static Compilation toCompilation(NewCompilationDto compilationDto, List<Event> collect) {
         return Compilation.builder()

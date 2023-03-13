@@ -6,7 +6,9 @@ import ru.practicum.events.request.model.Request;
 import java.time.format.DateTimeFormatter;
 
 public final class RequestMapper {
-    private RequestMapper(){}
+    private RequestMapper() {
+
+    }
 
     public static RequestDto toDto(Request request) {
         return RequestDto.builder()

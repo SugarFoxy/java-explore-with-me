@@ -15,7 +15,9 @@ import java.time.LocalDateTime;
 import java.time.temporal.ChronoUnit;
 
 public final class EventMapper {
-    private EventMapper(){}
+    private EventMapper() {
+
+    }
 
     public static EventShortDto toShortDto(Event event) {
         return EventShortDto.builder()

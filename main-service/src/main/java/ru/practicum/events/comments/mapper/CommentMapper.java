@@ -10,7 +10,9 @@ import ru.practicum.users.model.User;
 import java.time.LocalDateTime;
 
 public final class CommentMapper {
-    private CommentMapper(){}
+    private CommentMapper() {
+
+    }
 
     public static OutCommentDto toDto(Comment comment) {
         return OutCommentDto.builder()

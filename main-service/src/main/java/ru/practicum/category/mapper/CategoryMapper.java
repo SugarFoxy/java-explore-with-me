@@ -5,7 +5,9 @@ import ru.practicum.category.dto.NewCategoryDto;
 import ru.practicum.category.model.Category;
 
 public final class CategoryMapper {
-    private CategoryMapper(){}
+    private CategoryMapper() {
+
+    }
 
     public static Category toCategory(NewCategoryDto dto) {
         return Category.builder()
