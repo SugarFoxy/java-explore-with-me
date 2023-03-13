@@ -5,7 +5,11 @@ import ru.practicum.events.request.model.Request;
 
 import java.time.format.DateTimeFormatter;
 
-public class RequestMapper {
+public final class RequestMapper {
+    private RequestMapper() {
+
+    }
+
     public static RequestDto toDto(Request request) {
         return RequestDto.builder()
                 .id(request.getId())

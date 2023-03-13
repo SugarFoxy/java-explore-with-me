@@ -5,8 +5,6 @@ import ru.practicum.events.request.model.RequestStatus;
 
 @Setter
 @Getter
-@AllArgsConstructor
-@NoArgsConstructor
 @Builder
 public class RequestDto {
     private String created;

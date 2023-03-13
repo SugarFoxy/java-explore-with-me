@@ -9,7 +9,6 @@ import java.util.List;
 @Getter
 @AllArgsConstructor
 @NoArgsConstructor
-@Builder
 public class EventRequestStatusUpdateRequest {
     List<Long> requestIds;
     RequestStatus status;

@@ -23,8 +23,8 @@ public class ControllerPublicCompilation {
 
     @GetMapping
     public List<CompilationDto> getAllCompilations(@RequestParam(required = false) Boolean pinned,
-                                                   @RequestParam(defaultValue = "0") int from,
-                                                   @RequestParam(defaultValue = "10") int size) {
+                                                   @RequestParam(defaultValue = "0") Integer from,
+                                                   @RequestParam(defaultValue = "10") Integer size) {
         log.info("Получен запрос на получение подборок событий");
         return service.getAllCompilations(pinned, from, size);
     }

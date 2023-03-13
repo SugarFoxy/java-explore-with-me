@@ -8,7 +8,6 @@ import java.util.List;
 @Getter
 @AllArgsConstructor
 @NoArgsConstructor
-@Builder
 public class UpdateCompilationRequest {
     private List<Long> events;
     private Boolean pinned;

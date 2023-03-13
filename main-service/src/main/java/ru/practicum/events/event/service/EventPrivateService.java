@@ -1,9 +1,6 @@
 package ru.practicum.events.event.service;
 
-import ru.practicum.events.event.dto.EventFullDto;
-import ru.practicum.events.event.dto.EventShortDto;
-import ru.practicum.events.event.dto.NewEventDto;
-import ru.practicum.events.event.dto.UpdateEventRequest;
+import ru.practicum.events.event.dto.*;
 import ru.practicum.events.request.dto.EventRequestStatusUpdateRequest;
 import ru.practicum.events.request.dto.EventRequestStatusUpdateResult;
 import ru.practicum.events.request.dto.RequestDto;
@@ -24,4 +21,6 @@ public interface EventPrivateService {
     EventRequestStatusUpdateResult updateRequestStatus(Long userId,
                                                               Long eventId,
                                                               EventRequestStatusUpdateRequest updateRequest);
+
+    EventFullDto enableComment(Long userId, Long eventId, Boolean disable);
 }

@@ -5,7 +5,11 @@ import ru.practicum.users.dto.UserDto;
 import ru.practicum.users.dto.UserShortDto;
 import ru.practicum.users.model.User;
 
-public class UserMapper {
+public final class UserMapper {
+    private UserMapper() {
+
+    }
+
     public static User toUser(UserCreateDto dto) {
         return User.builder()
                 .name(dto.getName())

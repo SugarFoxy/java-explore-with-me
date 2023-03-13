@@ -47,6 +47,14 @@ public class ControllerEventPrivate {
         return service.update(userId, eventId, dto);
     }
 
+    @PatchMapping("/{eventId}/comment")
+    public EventFullDto enableComment(@Positive @PathVariable Long userId,
+                                      @Positive @PathVariable Long eventId,
+                                      @RequestParam(defaultValue = "false") Boolean disable) {
+        log.info("Получен запрос на вкдючение и выключении комментариев");
+        return service.enableComment(userId, eventId, disable);
+    }
+
     @GetMapping("/{eventId}")
     public EventFullDto getEventByIdWhereUserIsOwner(@Positive @PathVariable Long userId,
                                                      @Positive @PathVariable Long eventId) {
