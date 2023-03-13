@@ -38,7 +38,7 @@ public class CommentPublicServiceImpl implements CommentPublicService {
     @Override
     public List<OutCommentDto> getCommentByEvent(Long eventId, Boolean rating, int from, int size) {
         Event event = objectCreator.getEventById(eventId);
-        if (!event.getCommentSwitch()) {
+        if (!event.getCommentAvailable()) {
             return new ArrayList<>();
         }
         Sort sort = Sort.by(DESC, "commentTime");

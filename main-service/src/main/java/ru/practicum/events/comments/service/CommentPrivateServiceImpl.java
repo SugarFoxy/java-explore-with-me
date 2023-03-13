@@ -3,7 +3,7 @@ package ru.practicum.events.comments.service;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
-import ru.practicum.events.comments.dto.InputCommentDto;
+import ru.practicum.events.comments.dto.InCommentDto;
 import ru.practicum.events.comments.dto.OutCommentDto;
 import ru.practicum.events.comments.mapper.CommentMapper;
 import ru.practicum.events.comments.model.Comment;
@@ -34,9 +34,9 @@ public class CommentPrivateServiceImpl implements CommentPrivateService {
     }
 
     @Override
-    public OutCommentDto createComment(Long userId, InputCommentDto dto) {
+    public OutCommentDto createComment(Long userId, InCommentDto dto) {
         Event event = objectCreator.getEventById(dto.getEventId());
-        if (!event.getCommentSwitch()) {
+        if (!event.getCommentAvailable()) {
             throw new ConflictException("Невозможно добавить комментарий! У события отключены комментарии!");
         }
         return CommentMapper.toDto(commentRepository.save(CommentMapper.toComment(
@@ -48,7 +48,7 @@ public class CommentPrivateServiceImpl implements CommentPrivateService {
     }
 
     @Override
-    public OutCommentDto updateComment(Long userId, Long commentId, InputCommentDto dto) {
+    public OutCommentDto updateComment(Long userId, Long commentId, InCommentDto dto) {
         Comment comment = objectCreator.getCommentById(commentId);
 
         if (!comment.getCommentator().getId().equals(userId)) {

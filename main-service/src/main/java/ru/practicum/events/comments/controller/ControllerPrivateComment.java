@@ -3,7 +3,7 @@ package ru.practicum.events.comments.controller;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
-import ru.practicum.events.comments.dto.InputCommentDto;
+import ru.practicum.events.comments.dto.InCommentDto;
 import ru.practicum.events.comments.dto.OutCommentDto;
 import ru.practicum.events.comments.service.CommentPrivateService;
 import ru.practicum.util.exception.handler.CustomExceptionHandler;
@@ -22,36 +22,36 @@ public class ControllerPrivateComment {
     @PostMapping
     @ResponseStatus(HttpStatus.CREATED)
     public OutCommentDto createComment(@PathVariable Long userId,
-                                       @RequestBody InputCommentDto dto) {
+                                       @RequestBody InCommentDto dto) {
         return service.createComment(userId, dto);
     }
 
-    @PatchMapping("/{commId}")
+    @PatchMapping("/{commentId}")
     public OutCommentDto updateComment(@PathVariable Long userId,
-                                       @PathVariable Long commId,
-                                       @RequestBody InputCommentDto dto) {
-        return service.updateComment(userId, commId, dto);
+                                       @PathVariable Long commentId,
+                                       @RequestBody InCommentDto dto) {
+        return service.updateComment(userId, commentId, dto);
     }
 
-    @DeleteMapping("/{commId}")
+    @DeleteMapping("/{commentId}")
     @ResponseStatus(HttpStatus.NO_CONTENT)
     public void deleteComment(@PathVariable Long userId,
-                              @PathVariable Long commId) {
-        service.deleteComment(userId, commId);
+                              @PathVariable Long commentId) {
+        service.deleteComment(userId, commentId);
     }
 
-    @PostMapping("/{commId}/like")
+    @PostMapping("/{commentId}/like")
     @ResponseStatus(HttpStatus.CREATED)
     public OutCommentDto leaveRating(@PathVariable Long userId,
-                                     @PathVariable Long commId,
+                                     @PathVariable Long commentId,
                                      @RequestParam Boolean grade) {
-        return service.leaveRating(userId, commId, grade);
+        return service.leaveRating(userId, commentId, grade);
     }
 
-    @DeleteMapping("/{commId}/like")
+    @DeleteMapping("/{commentId}/like")
     @ResponseStatus(HttpStatus.NO_CONTENT)
     public void deleteRating(@PathVariable Long userId,
-                            @PathVariable Long commId) {
-        service.deleteRating(userId, commId);
+                            @PathVariable Long commentId) {
+        service.deleteRating(userId, commentId);
     }
 }

@@ -1,12 +1,12 @@
 package ru.practicum.events.comments.service;
 
-import ru.practicum.events.comments.dto.InputCommentDto;
+import ru.practicum.events.comments.dto.InCommentDto;
 import ru.practicum.events.comments.dto.OutCommentDto;
 
 public interface CommentPrivateService {
-    OutCommentDto createComment(Long userId, InputCommentDto dto);
+    OutCommentDto createComment(Long userId, InCommentDto dto);
 
-    OutCommentDto updateComment(Long userId, Long commentId, InputCommentDto dto);
+    OutCommentDto updateComment(Long userId, Long commentId, InCommentDto dto);
 
     void deleteComment(Long userId, Long commentId);
 

@@ -10,7 +10,9 @@ import java.util.HashSet;
 import java.util.List;
 import java.util.stream.Collectors;
 
-public class CompilationMapper {
+public final class CompilationMapper {
+    private CompilationMapper(){}
+
     public static Compilation toCompilation(NewCompilationDto compilationDto, List<Event> collect) {
         return Compilation.builder()
                 .events(new HashSet<>(collect))

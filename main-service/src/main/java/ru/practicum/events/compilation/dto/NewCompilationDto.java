@@ -9,7 +9,6 @@ import java.util.List;
 @Getter
 @AllArgsConstructor
 @NoArgsConstructor
-@Builder
 public class NewCompilationDto {
     private List<Long> events;
     @NotNull(message = "pinned не может быть пустым")

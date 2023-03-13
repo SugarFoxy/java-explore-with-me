@@ -9,8 +9,7 @@ import javax.validation.constraints.NotNull;
 @Getter
 @NoArgsConstructor
 @AllArgsConstructor
-@Builder
-public class InputCommentDto {
+public class InCommentDto {
     @NotNull
     @NotBlank
     private String text;

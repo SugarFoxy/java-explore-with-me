@@ -46,5 +46,5 @@ public class Event {
     private String title;
     private Long views;
     @Column(name = "comment_switch")
-    private Boolean commentSwitch;
+    private Boolean commentAvailable;
 }

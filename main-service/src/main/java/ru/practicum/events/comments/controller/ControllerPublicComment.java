@@ -28,8 +28,8 @@ public class ControllerPublicComment {
     @GetMapping
     public List<OutCommentDto> getCommentByEvent(@NotNull @RequestParam Long eventId,
                                                  @RequestParam(defaultValue = "false") Boolean rating,
-                                                 @PositiveOrZero @RequestParam(defaultValue = "0") int from,
-                                                 @Positive @RequestParam(defaultValue = "10") int size) {
+                                                 @PositiveOrZero @RequestParam(defaultValue = "0") Integer from,
+                                                 @Positive @RequestParam(defaultValue = "10") Integer size) {
         return service.getCommentByEvent(eventId, rating, from, size);
     }
 }

@@ -14,7 +14,9 @@ import ru.practicum.users.model.User;
 import java.time.LocalDateTime;
 import java.time.temporal.ChronoUnit;
 
-public class EventMapper {
+public final class EventMapper {
+    private EventMapper(){}
+
     public static EventShortDto toShortDto(Event event) {
         return EventShortDto.builder()
                 .id(event.getId())
@@ -75,7 +77,7 @@ public class EventMapper {
                 .state(event.getState())
                 .title(event.getTitle())
                 .views(event.getViews())
-                .commentSwitch(event.getCommentSwitch())
+                .commentAvailable(event.getCommentAvailable())
                 .build();
     }
 
@@ -115,7 +117,7 @@ public class EventMapper {
                         eventRequest.getTitle() :
                         event.getTitle())
                 .views(event.getViews())
-                .commentSwitch(event.getCommentSwitch())
+                .commentAvailable(event.getCommentAvailable())
                 .build();
     }
 
@@ -137,7 +139,7 @@ public class EventMapper {
                 .state(eventDto.getState())
                 .title(eventDto.getTitle())
                 .views(eventDto.getViews())
-                .commentSwitch(eventDto.getCommentSwitch())
+                .commentAvailable(eventDto.getCommentAvailable())
                 .build();
     }
 }

@@ -62,7 +62,7 @@ public class EventPrivateServiceImp implements EventPrivateService {
         Event event = toEvent(newEventDto,
                 objectCreator.getUserById(userId),
                 objectCreator.getCategoryById(newEventDto.getCategory()), 0L, 0L);
-        event.setCommentSwitch(true);
+        event.setCommentAvailable(true);
         return toEventFullDto(eventRepository.save(event));
     }
 
@@ -156,7 +156,7 @@ public class EventPrivateServiceImp implements EventPrivateService {
         if (!event.getInitiator().equals(user)) {
             throw new BadRequestException("Включать и выключать коментарии может только инициализатор события");
         }
-        event.setCommentSwitch(disable);
+        event.setCommentAvailable(disable);
         return toEventFullDto(eventRepository.save(event));
     }
 

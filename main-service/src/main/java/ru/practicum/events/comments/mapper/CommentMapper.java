@@ -1,6 +1,6 @@
 package ru.practicum.events.comments.mapper;
 
-import ru.practicum.events.comments.dto.InputCommentDto;
+import ru.practicum.events.comments.dto.InCommentDto;
 import ru.practicum.events.comments.dto.OutCommentDto;
 import ru.practicum.events.comments.model.Comment;
 import ru.practicum.events.event.model.Event;
@@ -9,7 +9,9 @@ import ru.practicum.users.model.User;
 
 import java.time.LocalDateTime;
 
-public class CommentMapper {
+public final class CommentMapper {
+    private CommentMapper(){}
+
     public static OutCommentDto toDto(Comment comment) {
         return OutCommentDto.builder()
                 .commentator(UserMapper.toShortDto(comment.getCommentator()))
@@ -29,7 +31,7 @@ public class CommentMapper {
                 .build();
     }
 
-    public static Comment toComment(InputCommentDto dto, LocalDateTime time, User commentator, Event event) {
+    public static Comment toComment(InCommentDto dto, LocalDateTime time, User commentator, Event event) {
         return Comment.builder()
                 .commentator(commentator)
                 .text(dto.getText())

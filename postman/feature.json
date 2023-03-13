@@ -87,7 +87,7 @@
                 "method": "POST",
                 "header": [],
                 "url": {
-                  "raw": "{{baseUrl}}/users/:userId/comments/:commId/like?grade=true",
+                  "raw": "{{baseUrl}}/users/:userId/comments/:commentId/like?grade=true",
                   "host": [
                     "{{baseUrl}}"
                   ],
@@ -95,7 +95,7 @@
                     "users",
                     ":userId",
                     "comments",
-                    ":commId",
+                    ":commentId",
                     "like"
                   ],
                   "query": [
@@ -110,7 +110,7 @@
                       "value": "{{uid}}"
                     },
                     {
-                      "key": "commId",
+                      "key": "commentId",
                       "value": "{{cid}}"
                     }
                   ]
@@ -193,7 +193,7 @@
                 "method": "POST",
                 "header": [],
                 "url": {
-                  "raw": "{{baseUrl}}/users/:userId/comments/:commId/like?grade=false",
+                  "raw": "{{baseUrl}}/users/:userId/comments/:commentId/like?grade=false",
                   "host": [
                     "{{baseUrl}}"
                   ],
@@ -201,7 +201,7 @@
                     "users",
                     ":userId",
                     "comments",
-                    ":commId",
+                    ":commentId",
                     "like"
                   ],
                   "query": [
@@ -216,7 +216,7 @@
                       "value": "{{uid}}"
                     },
                     {
-                      "key": "commId",
+                      "key": "commentId",
                       "value": "{{cid}}"
                     }
                   ]
@@ -312,7 +312,7 @@
                 "method": "DELETE",
                 "header": [],
                 "url": {
-                  "raw": "{{baseUrl}}/users/:userId/comments/:commId/like",
+                  "raw": "{{baseUrl}}/users/:userId/comments/:commentId/like",
                   "host": [
                     "{{baseUrl}}"
                   ],
@@ -320,7 +320,7 @@
                     "users",
                     ":userId",
                     "comments",
-                    ":commId",
+                    ":commentId",
                     "like"
                   ],
                   "variable": [
@@ -329,7 +329,7 @@
                       "value": "{{uid}}"
                     },
                     {
-                      "key": "commId",
+                      "key": "commentId",
                       "value": "{{cid}}"
                     }
                   ]
@@ -425,7 +425,7 @@
                 "method": "DELETE",
                 "header": [],
                 "url": {
-                  "raw": "{{baseUrl}}/users/:userId/comments/:commId/like",
+                  "raw": "{{baseUrl}}/users/:userId/comments/:commentId/like",
                   "host": [
                     "{{baseUrl}}"
                   ],
@@ -433,7 +433,7 @@
                     "users",
                     ":userId",
                     "comments",
-                    ":commId",
+                    ":commentId",
                     "like"
                   ],
                   "variable": [
@@ -442,7 +442,7 @@
                       "value": "{{uid}}"
                     },
                     {
-                      "key": "commId",
+                      "key": "commentId",
                       "value": "{{cid}}"
                     }
                   ]
@@ -650,7 +650,7 @@
               "raw": "{{request_body}}"
             },
             "url": {
-              "raw": "{{baseUrl}}/users/:userId/comments/:commId",
+              "raw": "{{baseUrl}}/users/:userId/comments/:commentId",
               "host": [
                 "{{baseUrl}}"
               ],
@@ -658,7 +658,7 @@
                 "users",
                 ":userId",
                 "comments",
-                ":commId"
+                ":commentId"
               ],
               "variable": [
                 {
@@ -666,7 +666,7 @@
                   "value": "{{uid}}"
                 },
                 {
-                  "key": "commId",
+                  "key": "commentId",
                   "value": "{{cid}}"
                 }
               ]
@@ -760,7 +760,7 @@
               "raw": ""
             },
             "url": {
-              "raw": "{{baseUrl}}/users/:userId/comments/:commId",
+              "raw": "{{baseUrl}}/users/:userId/comments/:commentId",
               "host": [
                 "{{baseUrl}}"
               ],
@@ -768,7 +768,7 @@
                 "users",
                 ":userId",
                 "comments",
-                ":commId"
+                ":commentId"
               ],
               "variable": [
                 {
@@ -776,7 +776,7 @@
                   "value": "{{uid}}"
                 },
                 {
-                  "key": "commId",
+                  "key": "commentId",
                   "value": "{{cid}}"
                 }
               ]
@@ -1195,7 +1195,7 @@
               "raw": "{{request_body}}"
             },
             "url": {
-              "raw": "{{baseUrl}}/users/:userId/comments/:commId",
+              "raw": "{{baseUrl}}/users/:userId/comments/:commentId",
               "host": [
                 "{{baseUrl}}"
               ],
@@ -1203,7 +1203,7 @@
                 "users",
                 ":userId",
                 "comments",
-                ":commId"
+                ":commentId"
               ],
               "variable": [
                 {
@@ -1211,7 +1211,7 @@
                   "value": "{{uid}}"
                 },
                 {
-                  "key": "commId",
+                  "key": "commentId",
                   "value": "{{cid}}"
                 }
               ]
@@ -1396,7 +1396,7 @@
               "raw": "{{request_body}}"
             },
             "url": {
-              "raw": "{{baseUrl}}/users/:userId/comments/:commId",
+              "raw": "{{baseUrl}}/users/:userId/comments/:commentId",
               "host": [
                 "{{baseUrl}}"
               ],
@@ -1404,7 +1404,7 @@
                 "users",
                 ":userId",
                 "comments",
-                ":commId"
+                ":commentId"
               ],
               "variable": [
                 {
@@ -1412,7 +1412,7 @@
                   "value": "{{uid}}"
                 },
                 {
-                  "key": "commId",
+                  "key": "commentId",
                   "value": "{{cid}}"
                 }
               ]
@@ -1486,7 +1486,7 @@
               "raw": ""
             },
             "url": {
-              "raw": "{{baseUrl}}/users/:userId/comments/:commId",
+              "raw": "{{baseUrl}}/users/:userId/comments/:commentId",
               "host": [
                 "{{baseUrl}}"
               ],
@@ -1494,7 +1494,7 @@
                 "users",
                 ":userId",
                 "comments",
-                ":commId"
+                ":commentId"
               ],
               "variable": [
                 {
@@ -1502,7 +1502,7 @@
                   "value": "{{uid}}"
                 },
                 {
-                  "key": "commId",
+                  "key": "commentId",
                   "value": "{{cid}}"
                 }
               ]
@@ -1574,7 +1574,7 @@
             "method": "DELETE",
             "header": [],
             "url": {
-              "raw": "{{baseUrl}}/users/:userId/comments/:commId/like",
+              "raw": "{{baseUrl}}/users/:userId/comments/:commentId/like",
               "host": [
                 "{{baseUrl}}"
               ],
@@ -1582,7 +1582,7 @@
                 "users",
                 ":userId",
                 "comments",
-                ":commId",
+                ":commentId",
                 "like"
               ],
               "variable": [
@@ -1591,7 +1591,7 @@
                   "value": "{{uid}}"
                 },
                 {
-                  "key": "commId",
+                  "key": "commentId",
                   "value": "{{cid}}"
                 }
               ]
@@ -1660,7 +1660,7 @@
             "method": "POST",
             "header": [],
             "url": {
-              "raw": "{{baseUrl}}/users/:userId/comments/:commId/like?grade=true",
+              "raw": "{{baseUrl}}/users/:userId/comments/:commentId/like?grade=true",
               "host": [
                 "{{baseUrl}}"
               ],
@@ -1668,7 +1668,7 @@
                 "users",
                 ":userId",
                 "comments",
-                ":commId",
+                ":commentId",
                 "like"
               ],
               "query": [
@@ -1683,7 +1683,7 @@
                   "value": "{{uid}}"
                 },
                 {
-                  "key": "commId",
+                  "key": "commentId",
                   "value": "{{cid}}"
                 }
               ]
@@ -1730,12 +1730,12 @@
           "         return this.post(\"/users/\" + userId + \"/comments\", comment, \"Ошибка при добавлении нового коментария: \", verbose)",
           "    }",
           "",
-          "    async addLike(userId, commId, verbose=null) {",
-          "        return this.post(\"/users/\" + userId + \"/comments/\" + commId+ \"/like?grade=true\", null,\"Ошибка при добавлении лайка: \", verbose )",
+          "    async addLike(userId, commentId, verbose=null) {",
+          "        return this.post(\"/users/\" + userId + \"/comments/\" + commentId+ \"/like?grade=true\", null,\"Ошибка при добавлении лайка: \", verbose )",
           "    }",
           "",
-          "    async addDislike(userId, commId, verbose=null){",
-          "        return this.post(\"/users/\" + userId + \"/comments/\" + commId + \"/like?grade=false\", null,\"Ошибка при добавлении дизлайка: \", verbose )",
+          "    async addDislike(userId, commentId, verbose=null){",
+          "        return this.post(\"/users/\" + userId + \"/comments/\" + commentId + \"/like?grade=false\", null,\"Ошибка при добавлении дизлайка: \", verbose )",
           "    }",
           "",
           "    async publishParticipationRequest(eventId, userId, verbose=null) {",
